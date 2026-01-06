@@ -87,7 +87,7 @@ app.add_middleware(
 async def root():
     return {"message": "Sunvizors Tour API is running (MongoDB Monolith)"}
 
-@app.post("/vote", response_model=VoteOut)
+@app.post("/api/vote", response_model=VoteOut)
 async def create_vote(vote: VoteCreate):
     existing_vote = await find_vote_by_email_city(vote.email, vote.city)
     if existing_vote:
@@ -105,7 +105,7 @@ async def create_vote(vote: VoteCreate):
     created_vote["id"] = created_vote["_id"]
     return created_vote
 
-@app.put("/vote/{vote_id}", response_model=VoteOut)
+@app.put("/api/vote/{vote_id}", response_model=VoteOut)
 async def update_vote_details(vote_id: str, details: VoteUpdate):
     update_data = details.dict(exclude_unset=True)
     updated_vote = await update_vote(vote_id, update_data)
@@ -114,7 +114,7 @@ async def update_vote_details(vote_id: str, details: VoteUpdate):
     updated_vote["id"] = updated_vote["_id"]
     return updated_vote
 
-@app.get("/stats")
+@app.get("/api/stats")
 async def get_stats():
     votes = await get_all_votes()
     city_counts = {}
@@ -125,7 +125,7 @@ async def get_stats():
     sorted_cities = sorted(city_counts.items(), key=lambda item: item[1], reverse=True)
     return [{"city": city, "votes": count} for city, count in sorted_cities]
 
-@app.get("/votes/{city}")
+@app.get("/api/votes/{city}")
 async def get_city_votes(city: str):
     all_votes = await get_all_votes()
     return [{
@@ -139,7 +139,7 @@ async def get_city_votes(city: str):
         "created_at": v.get("created_at")
     } for v in all_votes if v.get("city") == city]
 
-@app.get("/export_csv")
+@app.get("/api/export_csv")
 async def export_csv():
     votes_list = await get_all_votes()
     if not votes_list: return Response(content="No data", media_type="text/csv")
