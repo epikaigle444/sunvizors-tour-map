@@ -7,7 +7,8 @@ const AdminDashboard = ({ onClose, stats }) => {
   const [loadingDetails, setLoadingDetails] = useState(false);
 
   const downloadCSV = () => {
-    window.open('/api/export_csv', '_blank');
+    const baseUrl = axios.defaults.baseURL || '';
+    window.open(`${baseUrl}/api/export_csv`, '_blank');
   };
 
   const handleCityClick = async (city) => {
