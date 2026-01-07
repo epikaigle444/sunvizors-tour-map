@@ -15,8 +15,8 @@ const PulseIcon = L.divIcon({
   iconAnchor: [7, 7]
 });
 
-// Liste des villes à afficher par défaut même en dézoomé pour équilibrer la carte
-const mainCities = ["Paris", "Lyon", "Marseille", "Bordeaux", "Lille", "Bruxelles", "Nantes", "Brest", "Perpignan", "Ajaccio", "Reims", "Montpellier", "Strasbourg"];
+// Liste des villes prioritaires (espacées géographiquement) pour éviter les chevauchements au départ
+const mainCities = ["Paris", "Lille", "Lyon", "Marseille", "Toulouse", "Bordeaux", "Nantes", "Brest", "Limoges", "Ajaccio", "Bruxelles", "Reims"];
 
 const MarkersWithZoom = ({ onCitySelect }) => {
   const map = useMap();
