@@ -91,7 +91,9 @@ const AdminDashboard = ({ onClose, stats }) => {
                                    <th className="pb-2">Nom / Prénom</th>
                                    <th className="pb-2">Tel</th>
                                    <th className="pb-2">Salle Proposée</th>
+                                   <th className="pb-2">Souhaits</th>
                                    <th className="pb-2">Message</th>
+                                   <th className="pb-2">Date</th>
                                  </tr>
                                </thead>
                                <tbody>
@@ -99,9 +101,11 @@ const AdminDashboard = ({ onClose, stats }) => {
                                    <tr key={detail.id} className="border-b border-gray-800/50 hover:bg-white/5">
                                      <td className="py-2 pl-2 font-mono text-gold">{detail.email}</td>
                                      <td className="py-2">{detail.first_name} {detail.last_name}</td>
-                                     <td className="py-2">{detail.phone}</td>
+                                     <td className="py-2 whitespace-nowrap">{detail.phone}</td>
                                      <td className="py-2 italic text-gray-400">{detail.venue_proposal || "-"}</td>
-                                     <td className="py-2 text-gray-400 truncate max-w-[200px]" title={detail.message}>{detail.message || "-"}</td>
+                                     <td className="py-2 text-gray-400 text-[10px]">{Array.isArray(detail.intentions) ? detail.intentions.join(", ") : detail.intentions || "-"}</td>
+                                     <td className="py-2 text-gray-400 truncate max-w-[150px]" title={detail.message}>{detail.message || "-"}</td>
+                                     <td className="py-2 text-gray-500 text-[10px] whitespace-nowrap">{detail.created_at ? new Date(detail.created_at).toLocaleString('fr-FR') : "-"}</td>
                                    </tr>
                                  ))}
                                </tbody>
