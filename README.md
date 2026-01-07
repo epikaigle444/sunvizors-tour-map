@@ -36,30 +36,5 @@ L'idée est de faire rayonner le groupe sur l'ensemble de la France en ciblant l
 
 ---
 
-## 📖 Guide d'Installation (Développement)
-
-Si vous souhaitez faire tourner le projet localement :
-
-### 1. Prérequis
-- Python 3.9+ & Node.js 18+
-- Une instance MongoDB (Locale ou Atlas)
-
-### 2. Lancement du Backend
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
-
-### 3. Lancement du Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
----
-
 *Projet développé pour la promotion de **The Sunvizors**. [thesunvizors.com](https://thesunvizors.com)*
+
