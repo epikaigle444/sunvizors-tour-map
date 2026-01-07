@@ -50,14 +50,14 @@ function App() {
     <div className="relative w-full h-screen bg-black overflow-hidden">
       <Leaderboard stats={stats} />
       
-      <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-4">
+      <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-6">
          <button 
             onClick={() => setIsAdmin(true)}
-            className="text-[10px] text-gray-800 hover:text-gray-600 uppercase"
+            className="px-6 py-3 text-sm bg-gold text-black hover:bg-white transition-all uppercase tracking-[0.2em] font-black rounded-full shadow-[0_0_20px_rgba(204,165,44,0.6)] border-2 border-white/20"
          >
-            Admin
+            PANEL ADMIN
          </button>
-         <a href="https://thesunvizors.com" target="_blank" rel="noreferrer" className="text-white/50 hover:text-gold text-xs uppercase tracking-widest font-bold">
+         <a href="https://thesunvizors.com" target="_blank" rel="noreferrer" className="hidden md:block text-white/50 hover:text-gold text-xs uppercase tracking-widest font-bold">
             The Sunvizors
          </a>
       </div>
