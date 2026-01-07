@@ -15,6 +15,9 @@ const PulseIcon = L.divIcon({
   iconAnchor: [7, 7]
 });
 
+// Liste des villes à afficher par défaut même en dézoomé pour équilibrer la carte
+const mainCities = ["Paris", "Lyon", "Marseille", "Bordeaux", "Lille", "Bruxelles", "Nantes", "Brest", "Perpignan", "Ajaccio", "Reims", "Montpellier", "Strasbourg"];
+
 const MarkersWithZoom = ({ onCitySelect }) => {
   const map = useMap();
   const [zoom, setZoom] = useState(map.getZoom());
@@ -27,28 +30,33 @@ const MarkersWithZoom = ({ onCitySelect }) => {
 
   return (
     <>
-      {cities.map((city) => (
-        <Marker 
-          key={city.name} 
-          position={[city.lat, city.lng]} 
-          icon={PulseIcon}
-          eventHandlers={{
-            click: () => {
-              onCitySelect(city.name);
-            },
-          }}
-        >
-          <Tooltip 
-            key={`${city.name}-${zoom >= 7}`} // Force re-render when switching modes
-            permanent={zoom >= 7} 
-            direction="top" 
-            offset={[0, -10]}
-            className="custom-tooltip"
+      {cities.map((city) => {
+        const isMainCity = mainCities.includes(city.name);
+        const showLabel = zoom >= 7 || isMainCity;
+
+        return (
+          <Marker 
+            key={city.name} 
+            position={[city.lat, city.lng]} 
+            icon={PulseIcon}
+            eventHandlers={{
+              click: () => {
+                onCitySelect(city.name);
+              },
+            }}
           >
-            {city.name}
-          </Tooltip>
-        </Marker>
-      ))}
+            <Tooltip 
+              key={`${city.name}-${showLabel}`} // Force refresh
+              permanent={showLabel} 
+              direction="top" 
+              offset={[0, -10]}
+              className="custom-tooltip"
+            >
+              {city.name}
+            </Tooltip>
+          </Marker>
+        );
+      })}
     </>
   );
 };
