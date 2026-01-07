@@ -1,62 +1,65 @@
-# The Sunvizors Tour Map
+# 🎸 The Sunvizors - Tour Vote Map
 
-Carte interactive de vote pour la tournée du groupe **The Sunvizors**.
-Application Full-Stack (React + FastAPI + MongoDB).
+Une application interactive et immersive conçue pour engager la communauté des fans du groupe **The Sunvizors**. Cette plateforme permet aux fans de voter pour leur ville et de s'investir concrètement dans l'organisation de la future tournée.
 
-## Architecture
-*   **Frontend :** React, Leaflet (Carte), Tailwind CSS (Design Noir & Or).
-*   **Backend :** Python FastAPI (Monolithique).
-*   **Base de données :** MongoDB (Stockage des votes et contacts).
+## 🌟 Le Concept
+L'idée est de faire rayonner le groupe sur l'ensemble de la France en ciblant les villes où l'attente est la plus forte. Les fans ne sont plus seulement spectateurs, ils deviennent acteurs de la tournée en proposant des salles et en exprimant leur souhait de s'investir (aide, promotion, présence).
 
-## Prérequis
-*   Node.js 18+
-*   Python 3.9+
-*   MongoDB 6.0+ (Doit être installé et lancé)
+## 🚀 Fonctionnalités Clés
 
-## Installation & Lancement Rapide
+### 🗺️ Carte Interactive
+- **Navigation Instinctive :** Une carte stylisée "Dark Mode" avec des points dorés pulsants.
+- **Affichage Intelligent :** Les noms des villes principales sont visibles par défaut, les autres apparaissent au zoom pour une clarté optimale.
+- **Engagement Rapide :** Un clic sur une ville ouvre instantanément le tunnel de vote.
 
-### 1. Base de données (MongoDB)
-Vérifiez que MongoDB tourne :
+### 🗳️ Système de Vote en 2 Étapes
+1.  **Le Vote :** Identification par email pour comptabiliser une voix pour la ville choisie.
+2.  **L'Engagement :** Un formulaire complémentaire pour récolter des données précieuses :
+    - Coordonnées (Nom, Prénom, Tel).
+    - Suggestions de salles de concert locales.
+    - Type d'investissement (Venir au concert, aider le groupe, inviter des amis).
+    - Message personnalisé pour le groupe.
+
+### 📊 Tableau de Bord Admin
+- **Statistiques en Direct :** Classement complet de toutes les villes par nombre de votes.
+- **Gestion des Fans :** Visualisation détaillée des informations de contact et des messages pour chaque ville.
+- **Export de Données :** Un bouton d'export CSV optimisé pour Excel (données nettoyées et formatées).
+
+---
+
+## 🛠️ Stack Technique
+- **Frontend :** React.js + Tailwind CSS + Framer Motion.
+- **Cartographie :** Leaflet (OpenStreetMap) avec tuiles personnalisées.
+- **Backend :** FastAPI (Python) - Architecture monolithique haute performance.
+- **Base de données :** MongoDB Atlas (Cloud).
+- **Hébergement :** Vercel (Frontend) & Render (Backend).
+
+---
+
+## 📖 Guide d'Installation (Développement)
+
+Si vous souhaitez faire tourner le projet localement :
+
+### 1. Prérequis
+- Python 3.9+ & Node.js 18+
+- Une instance MongoDB (Locale ou Atlas)
+
+### 2. Lancement du Backend
 ```bash
-sudo systemctl status mongod
-# Si éteint : sudo systemctl start mongod
-```
-
-### 2. Backend (API)
-Le backend gère les votes et l'export CSV.
-```bash
-cd sunvizors-tour-map/backend
+cd backend
+python -m venv venv
 source venv/bin/activate
-# Lancer le serveur
+pip install -r requirements.txt
 uvicorn main:app --reload
 ```
-L'API sera sur : `http://localhost:8000`
 
-### 3. Frontend (Carte)
-Le site web visible par les utilisateurs.
+### 3. Lancement du Frontend
 ```bash
-cd sunvizors-tour-map/frontend
-# Lancer le site
+cd frontend
+npm install
 npm run dev
 ```
-Le site sera sur : `http://localhost:5173`
 
-## Fonctionnalités Clés
-1.  **Vote Fan :**
-    *   Clic sur une ville -> Email (Étape 1).
-    *   Formulaire détaillé (Nom, Tel, Salle, Message) (Étape 2).
-2.  **Carte Intelligente :**
-    *   Les noms des villes apparaissent au zoom.
-    *   Top 5 affiché en permanence sur la carte.
-3.  **Administration :**
-    *   Accès via le bouton "ADMIN" (haut-droite) ou `Ctrl+Shift+A`.
-    *   Vue de **toutes** les villes.
-    *   **Détails :** Cliquez sur une ville pour voir la liste des votants.
-    *   **Export :** Bouton "EXPORTER CSV" pour récupérer toutes les données.
+---
 
-## Commandes Utiles
-Si les serveurs ne répondent plus, tuez les processus et relancez :
-```bash
-pkill -f uvicorn
-pkill -f "npm run dev"
-```
+*Projet développé pour la promotion de **The Sunvizors**. [thesunvizors.com](https://thesunvizors.com)*
