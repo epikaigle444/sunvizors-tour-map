@@ -164,11 +164,35 @@ const VoteModal = ({ city, onClose, onVoteSuccess }) => {
           <div className="text-center py-8">
             <h3 className="text-xl text-gold mb-4">MERCI !</h3>
             <p className="mb-6 text-gray-300">Ton soutien est précieux.</p>
-            <div className="flex justify-center space-x-4 mb-6">
-                {/* Placeholder Social Share */}
-                <a href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400">Facebook</a>
-                <a href={`https://twitter.com/intent/tweet?url=${window.location.href}&text=Je viens de voter pour ${city} pour le concert de The Sunvizors !`} target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:text-sky-400">Twitter</a>
+            
+            <div className="flex flex-col items-center space-y-4 mb-8">
+              <div className="flex justify-center space-x-6">
+                  <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 font-bold uppercase text-xs tracking-widest">Facebook</a>
+                  <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Je viens de voter pour ${city} pour le concert de The Sunvizors !`)}`} target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:text-sky-400 font-bold uppercase text-xs tracking-widest">Twitter</a>
+              </div>
+
+              <div className="w-full max-w-[280px]">
+                <p className="text-[10px] uppercase text-gray-500 mb-2">Partager le lien :</p>
+                <div className="flex border border-gray-700 bg-black">
+                  <input 
+                    readOnly 
+                    value={window.location.href} 
+                    className="bg-transparent text-[10px] px-2 flex-1 outline-none text-gray-400 truncate"
+                  />
+                  <button 
+                    onClick={(e) => {
+                      navigator.clipboard.writeText(window.location.href);
+                      e.target.innerText = "COPIÉ !";
+                      setTimeout(() => { e.target.innerText = "COPIER"; }, 2000);
+                    }}
+                    className="bg-gray-800 px-3 py-2 text-[10px] font-bold hover:bg-gold hover:text-black transition-colors shrink-0"
+                  >
+                    COPIER
+                  </button>
+                </div>
+              </div>
             </div>
+
             <button onClick={onClose} className="text-sm underline text-gray-500 hover:text-white">Fermer</button>
           </div>
         )}
