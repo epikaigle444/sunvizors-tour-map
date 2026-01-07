@@ -83,29 +83,35 @@ const AdminDashboard = ({ onClose, stats }) => {
                     ) : (
                       <>
                          {cityDetails.length > 0 ? (
-                           <div className="overflow-x-auto">
-                             <table className="w-full text-left text-xs text-gray-300 min-w-[500px]">
-                               <thead className="text-gray-500 border-b border-gray-700">
+                           <div className="overflow-x-auto rounded border border-gray-800/50">
+                             <table className="w-full text-left text-xs text-gray-300 min-w-[1000px] table-fixed">
+                               <thead className="text-gray-500 border-b border-gray-700 bg-black/40">
                                  <tr>
-                                   <th className="pb-2 pl-2">Email</th>
-                                   <th className="pb-2">Nom / Prénom</th>
-                                   <th className="pb-2">Tel</th>
-                                   <th className="pb-2">Salle Proposée</th>
-                                   <th className="pb-2">Souhaits</th>
-                                   <th className="pb-2">Message</th>
-                                   <th className="pb-2">Date</th>
+                                   <th className="py-3 px-4 w-[200px]">Email</th>
+                                   <th className="py-3 px-4 w-[150px]">Nom / Prénom</th>
+                                   <th className="py-3 px-4 w-[120px]">Tel</th>
+                                   <th className="py-3 px-4 w-[150px]">Salle Proposée</th>
+                                   <th className="py-3 px-4 w-[180px]">Souhaits</th>
+                                   <th className="py-3 px-4">Message</th>
+                                   <th className="py-3 px-4 w-[130px]">Date</th>
                                  </tr>
                                </thead>
                                <tbody>
                                  {cityDetails.map((detail) => (
-                                   <tr key={detail.id} className="border-b border-gray-800/50 hover:bg-white/5">
-                                     <td className="py-2 pl-2 font-mono text-gold">{detail.email}</td>
-                                     <td className="py-2">{detail.first_name} {detail.last_name}</td>
-                                     <td className="py-2 whitespace-nowrap">{detail.phone}</td>
-                                     <td className="py-2 italic text-gray-400">{detail.venue_proposal || "-"}</td>
-                                     <td className="py-2 text-gray-400 text-[10px]">{Array.isArray(detail.intentions) ? detail.intentions.join(", ") : detail.intentions || "-"}</td>
-                                     <td className="py-2 text-gray-400 truncate max-w-[150px]" title={detail.message}>{detail.message || "-"}</td>
-                                     <td className="py-2 text-gray-500 text-[10px] whitespace-nowrap">{detail.created_at ? new Date(detail.created_at).toLocaleString('fr-FR') : "-"}</td>
+                                   <tr key={detail.id} className="border-b border-gray-800/50 hover:bg-white/5 transition-colors">
+                                     <td className="py-3 px-4 font-mono text-gold break-all">{detail.email}</td>
+                                     <td className="py-3 px-4 font-medium">{detail.first_name} {detail.last_name}</td>
+                                     <td className="py-3 px-4 whitespace-nowrap">{detail.phone}</td>
+                                     <td className="py-3 px-4 italic text-gray-400 break-words">{detail.venue_proposal || "-"}</td>
+                                     <td className="py-3 px-4 text-gray-400 text-[10px] leading-relaxed">
+                                       {Array.isArray(detail.intentions) ? detail.intentions.join(", ") : detail.intentions || "-"}
+                                     </td>
+                                     <td className="py-3 px-4 text-gray-400 text-[11px] leading-relaxed break-words min-w-[200px]">
+                                       {detail.message || "-"}
+                                     </td>
+                                     <td className="py-3 px-4 text-gray-500 text-[10px] whitespace-nowrap">
+                                       {detail.created_at ? new Date(detail.created_at).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' }) : "-"}
+                                     </td>
                                    </tr>
                                  ))}
                                </tbody>
