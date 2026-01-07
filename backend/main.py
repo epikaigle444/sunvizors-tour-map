@@ -146,10 +146,54 @@ async def export_csv():
     clean_list = []
     for v in votes_list:
         item = v.copy()
-        item["id"] = item.get("_id")
+        # On ne garde pas l'ID pour le CSV
         if "_id" in item: del item["_id"]
+        if "id" in item: del item["id"]
+        
+        # Formater les intentions (liste -> chaîne séparée par des virgules)
+        if isinstance(item.get("intentions"), list):
+            item["intentions"] = ", ".join(item["intentions"])
+            
+        # Formater la date (enlever les centièmes)
+        if item.get("created_at"):
+            try:
+                # Si c'est une chaîne ISO, on la transforme
+                dt = pd.to_datetime(item["created_at"])
+                item["created_at"] = dt.strftime("%Y-%m-%d %H:%M:%S")
+            except:
+                pass
+            
         clean_list.append(item)
+    # 3. On utilise la librairie 'pandas' pour créer le tableau CSV
     df = pd.DataFrame(clean_list)
+
+    # --- RENOMMAGE DES COLONNES ---
+    column_mapping = {
+        "email": "Email",
+        "city": "Ville",
+        "first_name": "Prénom",
+        "last_name": "Nom",
+        "phone": "Téléphone",
+        "venue_proposal": "Salle Proposée",
+        "intentions": "Intentions",
+        "message": "Message",
+        "created_at": "Date de vote",
+        "id": "ID interne"
+    }
+    # On renomme seulement les colonnes qui existent dans le DataFrame
+    df = df.rename(columns={k: v for k, v in column_mapping.items() if k in df.columns})
+
+    # --- NETTOYAGE & RÉORGANISATION ---
+    # Supprimer l'ID interne si présent
+    if "ID interne" in df.columns:
+        df = df.drop(columns=["ID interne"])
+    
+    # Déplacer "Date de vote" à la fin si présente
+    if "Date de vote" in df.columns:
+        cols = [c for c in df.columns if c != "Date de vote"] + ["Date de vote"]
+        df = df[cols]
+    
+    # 4. On écrit le CSV dans un flux mémoire (StringIO)
     stream = io.StringIO()
     df.to_csv(stream, index=False)
     response = Response(content=stream.getvalue(), media_type="text/csv")
