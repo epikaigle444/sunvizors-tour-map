@@ -135,6 +135,7 @@ async def get_city_votes(city: str):
         "last_name": v.get("last_name"),
         "phone": v.get("phone"),
         "venue_proposal": v.get("venue_proposal"),
+        "intentions": v.get("intentions"),
         "message": v.get("message"),
         "created_at": v.get("created_at")
     } for v in all_votes if v.get("city") == city]
