@@ -46,6 +46,8 @@ function App() {
 
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden" id="map-container">
+      <WelcomeScreen onStart={() => {}} />
+
       <div id="leaderboard-container">
         <Leaderboard stats={stats} />
       </div>
@@ -57,18 +59,17 @@ function App() {
            >
               Admin
            </button>
-        </div>
-
-        <MapComponent onCitySelect={setSelectedCity} />
-
-        {selectedCity && (
-          <VoteModal 
-            city={selectedCity} 
-            onClose={() => setSelectedCity(null)} 
-            onVoteSuccess={fetchStats}
-          />
-        )}
       </div>
+
+      <MapComponent onCitySelect={setSelectedCity} />
+
+      {selectedCity && (
+        <VoteModal 
+          city={selectedCity} 
+          onClose={() => setSelectedCity(null)} 
+          onVoteSuccess={fetchStats}
+        />
+      )}
     </div>
   );
 }
