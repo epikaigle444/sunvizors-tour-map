@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import html2canvas from 'html2canvas';
-
-const VoteModal = ({ city, onClose, onVoteSuccess }) => {
+const VoteModal = ({ city, onClose, onVoteSuccess, onOpenShare }) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [voteId, setVoteId] = useState(null);
-  
-  // Share States
-  const [shareLoading, setShareLoading] = useState(false);
 
   // Form States
   const [email, setEmail] = useState('');
@@ -61,81 +56,6 @@ const VoteModal = ({ city, onClose, onVoteSuccess }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // --- SHARE LOGIC ---
-  const handleShare = async (type) => {
-    setShareLoading(true);
-    let elementId = null;
-    let filename = 'sunvizors-share.png';
-    let text = "Je viens de voter pour ma ville ! Viens soutenir The Sunvizors !";
-    let url = window.location.href;
-
-    if (type === 'leaderboard') {
-      elementId = 'leaderboard-container';
-      filename = 'classement-sunvizors.png';
-      text = "Regarde le classement des villes pour la tournée de The Sunvizors !";
-    } else if (type === 'map') {
-      elementId = 'map-container';
-      filename = 'carte-sunvizors.png';
-      text = "Regarde la carte de la tournée participative !";
-    } else if (type === 'invite') {
-      // Invite logic doesn't need screenshot of DOM, just link with param
-      const inviteUrl = `${window.location.origin}?city=${encodeURIComponent(city)}`;
-      const inviteText = `Viens aider tes amis et vote pour ${city} pour le concert de The Sunvizors !`;
-      
-      // Open native share if available (Mobile)
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: 'The Sunvizors Tour',
-            text: inviteText,
-            url: inviteUrl
-          });
-        } catch (err) { console.log('Share canceled'); }
-      } else {
-        // Fallback Desktop
-        navigator.clipboard.writeText(inviteText + " " + inviteUrl);
-        alert("Lien d'invitation copié !");
-      }
-      setShareLoading(false);
-      return;
-    }
-
-    // Capture Logic for Map/Leaderboard
-    if (elementId) {
-      const element = document.getElementById(elementId);
-      if (element) {
-        try {
-          // Temporarily hide modal to not capture it if capturing map
-          const modal = document.querySelector('.modal-content');
-          if (modal && type === 'map') modal.style.opacity = '0';
-
-          const canvas = await html2canvas(element, { useCORS: true, allowTaint: true });
-          
-          if (modal && type === 'map') modal.style.opacity = '1';
-
-          const image = canvas.toDataURL("image/png");
-          
-          // Download the image
-          const link = document.createElement('a');
-          link.href = image;
-          link.download = filename;
-          link.click();
-
-          // Open Twitter intent with text (user has to attach image manually on desktop)
-          setTimeout(() => {
-             const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-             window.open(twitterUrl, '_blank');
-          }, 1000);
-
-        } catch (err) {
-          console.error("Capture failed", err);
-          alert("Impossible de générer l'image. Veuillez réessayer.");
-        }
-      }
-    }
-    setShareLoading(false);
   };
 
   return (
@@ -240,45 +160,18 @@ const VoteModal = ({ city, onClose, onVoteSuccess }) => {
         )}
 
         {step === 3 && (
-          <div className="text-center py-6 overflow-y-auto">
+          <div className="text-center py-6">
             <h3 className="text-xl text-gold mb-2 font-bold">MERCI !</h3>
             <p className="mb-6 text-gray-300 text-sm">Ton soutien est précieux.</p>
             
-            <div className="space-y-3 w-full px-4 mb-6">
-              <p className="text-[10px] uppercase text-gray-500 font-bold tracking-widest border-b border-gray-800 pb-2 mb-4">Partager</p>
+            <button 
+              onClick={() => { onClose(); onOpenShare(); }}
+              className="w-full bg-gold hover:bg-yellow-600 text-black font-bold py-3 rounded uppercase tracking-wide mb-4 transition"
+            >
+              PARTAGER MON VOTE
+            </button>
 
-              {/* Button A: Partager le classement */}
-              <button 
-                onClick={() => handleShare('leaderboard')}
-                disabled={shareLoading}
-                className="w-full bg-gray-800 hover:bg-gold hover:text-black text-white py-3 rounded flex items-center justify-center space-x-3 transition group"
-              >
-                <span className="text-lg">🏆</span>
-                <span className="text-xs font-bold uppercase tracking-wide">Partager le classement</span>
-              </button>
-
-              {/* Button B: Inviter ses amis */}
-              <button 
-                onClick={() => handleShare('invite')}
-                disabled={shareLoading}
-                className="w-full bg-gray-800 hover:bg-gold hover:text-black text-white py-3 rounded flex items-center justify-center space-x-3 transition group"
-              >
-                <span className="text-lg">💌</span>
-                <span className="text-xs font-bold uppercase tracking-wide">Inviter des amis</span>
-              </button>
-
-              {/* Button C: Partager la carte */}
-              <button 
-                onClick={() => handleShare('map')}
-                disabled={shareLoading}
-                className="w-full bg-gray-800 hover:bg-gold hover:text-black text-white py-3 rounded flex items-center justify-center space-x-3 transition group"
-              >
-                <span className="text-lg">🗺️</span>
-                <span className="text-xs font-bold uppercase tracking-wide">Partager la carte</span>
-              </button>
-            </div>
-
-            <button onClick={onClose} className="text-xs underline text-gray-500 hover:text-white mt-2">Fermer</button>
+            <button onClick={onClose} className="text-xs underline text-gray-500 hover:text-white">Fermer</button>
           </div>
         )}
       </motion.div>

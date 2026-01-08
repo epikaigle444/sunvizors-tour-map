@@ -3,7 +3,7 @@ import MapComponent from './components/Map';
 import VoteModal from './components/VoteModal';
 import Leaderboard from './components/Leaderboard';
 import AdminDashboard from './components/AdminDashboard';
-import WelcomeScreen from './components/WelcomeScreen';
+import ShareModal from './components/ShareModal';
 import axios from 'axios';
 
 // Configuration de l'URL de l'API
@@ -14,6 +14,7 @@ function App() {
   const [selectedCity, setSelectedCity] = useState(null);
   const [stats, setStats] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const fetchStats = async () => {
     try {
@@ -52,7 +53,13 @@ function App() {
         <Leaderboard stats={stats} />
       </div>
       
-      <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-6">
+      <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-4">
+           <button 
+              onClick={() => setIsShareOpen(true)}
+              className="px-4 py-2 text-xs bg-white text-black hover:bg-gray-200 transition-all uppercase tracking-widest font-bold rounded shadow-lg border border-gray-300"
+           >
+              Partager
+           </button>
            <button 
               onClick={() => setIsAdmin(true)}
               className="px-3 py-1 text-[10px] bg-gold text-black hover:bg-yellow-500 transition-all uppercase tracking-widest font-bold rounded shadow-lg"
@@ -68,6 +75,15 @@ function App() {
           city={selectedCity} 
           onClose={() => setSelectedCity(null)} 
           onVoteSuccess={fetchStats}
+          onOpenShare={() => setIsShareOpen(true)} // Pass this to modal
+        />
+      )}
+
+      {isShareOpen && (
+        <ShareModal 
+          onClose={() => setIsShareOpen(false)} 
+          city={selectedCity} 
+          leaderboard={stats} 
         />
       )}
     </div>
