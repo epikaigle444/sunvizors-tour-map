@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { motion, AnimatePresence } from 'framer-motion';
+import html2canvas from 'html2canvas';
 
 const VoteModal = ({ city, onClose, onVoteSuccess }) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [voteId, setVoteId] = useState(null);
+  
+  // Share States
+  const [shareLoading, setShareLoading] = useState(false);
 
   // Form States
   const [email, setEmail] = useState('');
@@ -59,13 +60,88 @@ const VoteModal = ({ city, onClose, onVoteSuccess }) => {
     }
   };
 
+  // --- SHARE LOGIC ---
+  const handleShare = async (type) => {
+    setShareLoading(true);
+    let elementId = null;
+    let filename = 'sunvizors-share.png';
+    let text = "Je viens de voter pour ma ville ! Viens soutenir The Sunvizors !";
+    let url = window.location.href;
+
+    if (type === 'leaderboard') {
+      elementId = 'leaderboard-container';
+      filename = 'classement-sunvizors.png';
+      text = "Regarde le classement des villes pour la tournée de The Sunvizors !";
+    } else if (type === 'map') {
+      elementId = 'map-container';
+      filename = 'carte-sunvizors.png';
+      text = "Regarde la carte de la tournée participative !";
+    } else if (type === 'invite') {
+      // Invite logic doesn't need screenshot of DOM, just link with param
+      const inviteUrl = `${window.location.origin}?city=${encodeURIComponent(city)}`;
+      const inviteText = `Viens aider tes amis et vote pour ${city} pour le concert de The Sunvizors !`;
+      
+      // Open native share if available (Mobile)
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'The Sunvizors Tour',
+            text: inviteText,
+            url: inviteUrl
+          });
+        } catch (err) { console.log('Share canceled'); }
+      } else {
+        // Fallback Desktop
+        navigator.clipboard.writeText(inviteText + " " + inviteUrl);
+        alert("Lien d'invitation copié !");
+      }
+      setShareLoading(false);
+      return;
+    }
+
+    // Capture Logic for Map/Leaderboard
+    if (elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        try {
+          // Temporarily hide modal to not capture it if capturing map
+          const modal = document.querySelector('.modal-content');
+          if (modal && type === 'map') modal.style.opacity = '0';
+
+          const canvas = await html2canvas(element, { useCORS: true, allowTaint: true });
+          
+          if (modal && type === 'map') modal.style.opacity = '1';
+
+          const image = canvas.toDataURL("image/png");
+          
+          // Download the image
+          const link = document.createElement('a');
+          link.href = image;
+          link.download = filename;
+          link.click();
+
+          // Open Twitter intent with text (user has to attach image manually on desktop)
+          setTimeout(() => {
+             const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+             window.open(twitterUrl, '_blank');
+          }, 1000);
+
+        } catch (err) {
+          console.error("Capture failed", err);
+          alert("Impossible de générer l'image. Veuillez réessayer.");
+        }
+      }
+    }
+    setShareLoading(false);
+  };
+
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={onClose}>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
-        className="bg-neutral-900 border border-gold text-white p-4 md:p-6 rounded shadow-xl w-[95%] md:w-full md:max-w-md relative flex flex-col max-h-[90vh]"
+        className="modal-content bg-neutral-900 border border-gold text-white p-4 md:p-6 rounded shadow-xl w-[95%] md:w-full md:max-w-md relative flex flex-col max-h-[90vh]"
         onClick={e => e.stopPropagation()}
       >
         <button onClick={onClose} className="absolute top-2 right-4 text-gray-400 hover:text-white text-2xl z-10">&times;</button>
@@ -161,58 +237,45 @@ const VoteModal = ({ city, onClose, onVoteSuccess }) => {
         )}
 
         {step === 3 && (
-          <div className="text-center py-8">
-            <h3 className="text-xl text-gold mb-4">MERCI !</h3>
-            <p className="mb-6 text-gray-300">Ton soutien est précieux.</p>
+          <div className="text-center py-6 overflow-y-auto">
+            <h3 className="text-xl text-gold mb-2 font-bold">MERCI !</h3>
+            <p className="mb-6 text-gray-300 text-sm">Ton soutien est précieux.</p>
             
-            <div className="flex flex-col items-center space-y-4 mb-8">
-              {/* Social Share Buttons */}
-              <div className="flex justify-center space-x-6 w-full">
-                  <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded text-center font-bold uppercase text-xs tracking-widest transition">Facebook</a>
-                  <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Je viens de voter pour ${city} pour le concert de The Sunvizors !`)}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-sky-500 hover:bg-sky-600 text-white py-2 rounded text-center font-bold uppercase text-xs tracking-widest transition">Twitter</a>
-              </div>
-              
-              {/* Bouton Inviter des amis (Mobile natif ou Email) */}
+            <div className="space-y-3 w-full px-4 mb-6">
+              <p className="text-[10px] uppercase text-gray-500 font-bold tracking-widest border-b border-gray-800 pb-2 mb-4">Partager</p>
+
+              {/* Button A: Partager le classement */}
               <button 
-                onClick={() => {
-                   if (navigator.share) {
-                     navigator.share({
-                       title: 'The Sunvizors Tour Vote',
-                       text: 'Viens voter pour ta ville pour la tournée de The Sunvizors !',
-                       url: window.location.href,
-                     });
-                   } else {
-                     window.location.href = `mailto:?subject=Vote pour le concert de The Sunvizors&body=Salut, viens voter pour ta ville ici : ${window.location.href}`;
-                   }
-                }}
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded font-bold uppercase text-xs tracking-widest transition flex items-center justify-center space-x-2"
+                onClick={() => handleShare('leaderboard')}
+                disabled={shareLoading}
+                className="w-full bg-gray-800 hover:bg-gold hover:text-black text-white py-3 rounded flex items-center justify-center space-x-3 transition group"
               >
-                <span>✉️ Inviter des amis</span>
+                <span className="text-lg">🏆</span>
+                <span className="text-xs font-bold uppercase tracking-wide">Partager le classement</span>
               </button>
 
-              <div className="w-full">
-                <p className="text-[10px] uppercase text-gray-500 mb-2 text-center">Ou copier le lien :</p>
-                <div className="flex border border-gray-700 bg-black">
-                  <input 
-                    readOnly 
-                    value={window.location.href} 
-                    className="bg-transparent text-[10px] px-2 flex-1 outline-none text-gray-400 truncate"
-                  />
-                  <button 
-                    onClick={(e) => {
-                      navigator.clipboard.writeText(window.location.href);
-                      e.target.innerText = "COPIÉ !";
-                      setTimeout(() => { e.target.innerText = "COPIER"; }, 2000);
-                    }}
-                    className="bg-gray-800 px-3 py-2 text-[10px] font-bold hover:bg-gold hover:text-black transition-colors shrink-0"
-                  >
-                    COPIER
-                  </button>
-                </div>
-              </div>
+              {/* Button B: Inviter ses amis */}
+              <button 
+                onClick={() => handleShare('invite')}
+                disabled={shareLoading}
+                className="w-full bg-gray-800 hover:bg-gold hover:text-black text-white py-3 rounded flex items-center justify-center space-x-3 transition group"
+              >
+                <span className="text-lg">💌</span>
+                <span className="text-xs font-bold uppercase tracking-wide">Inviter des amis</span>
+              </button>
+
+              {/* Button C: Partager la carte */}
+              <button 
+                onClick={() => handleShare('map')}
+                disabled={shareLoading}
+                className="w-full bg-gray-800 hover:bg-gold hover:text-black text-white py-3 rounded flex items-center justify-center space-x-3 transition group"
+              >
+                <span className="text-lg">🗺️</span>
+                <span className="text-xs font-bold uppercase tracking-wide">Partager la carte</span>
+              </button>
             </div>
 
-            <button onClick={onClose} className="text-sm underline text-gray-500 hover:text-white">Fermer</button>
+            <button onClick={onClose} className="text-xs underline text-gray-500 hover:text-white mt-2">Fermer</button>
           </div>
         )}
       </motion.div>

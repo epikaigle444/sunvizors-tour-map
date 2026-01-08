@@ -45,16 +45,12 @@ function App() {
   }
 
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden flex" id="root-app">
-      
-      {/* New Welcome & Sidebar Controller */}
-      <WelcomeScreen />
-
-      {/* Main Content Area */}
-      <div className="relative flex-1 h-full">
+    <div className="relative w-full h-screen bg-black overflow-hidden" id="map-container">
+      <div id="leaderboard-container">
         <Leaderboard stats={stats} />
-        
-        <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-4 no-capture">
+      </div>
+      
+      <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-6">
            <button 
               onClick={() => setIsAdmin(true)}
               className="px-3 py-1 text-[10px] bg-gold text-black hover:bg-yellow-500 transition-all uppercase tracking-widest font-bold rounded shadow-lg"
