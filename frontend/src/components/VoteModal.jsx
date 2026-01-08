@@ -166,13 +166,32 @@ const VoteModal = ({ city, onClose, onVoteSuccess }) => {
             <p className="mb-6 text-gray-300">Ton soutien est précieux.</p>
             
             <div className="flex flex-col items-center space-y-4 mb-8">
-              <div className="flex justify-center space-x-6">
-                  <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 font-bold uppercase text-xs tracking-widest">Facebook</a>
-                  <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Je viens de voter pour ${city} pour le concert de The Sunvizors !`)}`} target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:text-sky-400 font-bold uppercase text-xs tracking-widest">Twitter</a>
+              {/* Social Share Buttons */}
+              <div className="flex justify-center space-x-6 w-full">
+                  <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded text-center font-bold uppercase text-xs tracking-widest transition">Facebook</a>
+                  <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Je viens de voter pour ${city} pour le concert de The Sunvizors !`)}`} target="_blank" rel="noopener noreferrer" className="flex-1 bg-sky-500 hover:bg-sky-600 text-white py-2 rounded text-center font-bold uppercase text-xs tracking-widest transition">Twitter</a>
               </div>
+              
+              {/* Bouton Inviter des amis (Mobile natif ou Email) */}
+              <button 
+                onClick={() => {
+                   if (navigator.share) {
+                     navigator.share({
+                       title: 'The Sunvizors Tour Vote',
+                       text: 'Viens voter pour ta ville pour la tournée de The Sunvizors !',
+                       url: window.location.href,
+                     });
+                   } else {
+                     window.location.href = `mailto:?subject=Vote pour le concert de The Sunvizors&body=Salut, viens voter pour ta ville ici : ${window.location.href}`;
+                   }
+                }}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded font-bold uppercase text-xs tracking-widest transition flex items-center justify-center space-x-2"
+              >
+                <span>✉️ Inviter des amis</span>
+              </button>
 
-              <div className="w-full max-w-[280px]">
-                <p className="text-[10px] uppercase text-gray-500 mb-2">Partager le lien :</p>
+              <div className="w-full">
+                <p className="text-[10px] uppercase text-gray-500 mb-2 text-center">Ou copier le lien :</p>
                 <div className="flex border border-gray-700 bg-black">
                   <input 
                     readOnly 

@@ -3,11 +3,10 @@ import MapComponent from './components/Map';
 import VoteModal from './components/VoteModal';
 import Leaderboard from './components/Leaderboard';
 import AdminDashboard from './components/AdminDashboard';
+import WelcomeScreen from './components/WelcomeScreen';
 import axios from 'axios';
 
-// Configuration de l'URL de l'API :
-// En ligne, on utilisera la variable d'environnement ou l'URL de production
-// En local, on utilise le proxy configuré dans vite.config.js
+// Configuration de l'URL de l'API
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 axios.defaults.baseURL = API_BASE_URL;
 
@@ -29,10 +28,9 @@ function App() {
     fetchStats();
     const interval = setInterval(fetchStats, 30000);
     
-    // Simple secret listener for Admin (press Ctrl+Shift+A)
     const handleKeyDown = (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        setIsAdmin(prev => !prev);
+        setIsAdmin(true);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -47,30 +45,34 @@ function App() {
   }
 
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden">
-      <Leaderboard stats={stats} />
+    <div className="relative w-full h-screen bg-black overflow-hidden flex" id="root-app">
       
-      <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-4">
-         <button 
-            onClick={() => setIsAdmin(true)}
-            className="px-3 py-1 text-[10px] bg-gold text-black hover:bg-yellow-500 transition-all uppercase tracking-widest font-bold rounded shadow-lg"
-         >
-            Admin
-         </button>
-         <a href="https://thesunvizors.com" target="_blank" rel="noreferrer" className="text-white/50 hover:text-gold text-xs uppercase tracking-widest font-bold">
-            The Sunvizors
-         </a>
+      {/* New Welcome & Sidebar Controller */}
+      <WelcomeScreen />
+
+      {/* Main Content Area */}
+      <div className="relative flex-1 h-full">
+        <Leaderboard stats={stats} />
+        
+        <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-4 no-capture">
+           <button 
+              onClick={() => setIsAdmin(true)}
+              className="px-3 py-1 text-[10px] bg-gold text-black hover:bg-yellow-500 transition-all uppercase tracking-widest font-bold rounded shadow-lg"
+           >
+              Admin
+           </button>
+        </div>
+
+        <MapComponent onCitySelect={setSelectedCity} />
+
+        {selectedCity && (
+          <VoteModal 
+            city={selectedCity} 
+            onClose={() => setSelectedCity(null)} 
+            onVoteSuccess={fetchStats}
+          />
+        )}
       </div>
-
-      <MapComponent onCitySelect={setSelectedCity} />
-
-      {selectedCity && (
-        <VoteModal 
-          city={selectedCity} 
-          onClose={() => setSelectedCity(null)} 
-          onVoteSuccess={fetchStats}
-        />
-      )}
     </div>
   );
 }
