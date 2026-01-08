@@ -71,6 +71,7 @@ const MapComponent = ({ onCitySelect }) => {
       scrollWheelZoom={true} 
       className="h-screen w-full bg-[#1a1a1a]"
       zoomControl={false}
+      attributionControl={false}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
