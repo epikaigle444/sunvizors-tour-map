@@ -53,6 +53,14 @@ function App() {
       <div id="leaderboard-container">
         <Leaderboard stats={stats} />
       </div>
+
+      <div className="absolute top-4 left-4 z-[1000] hidden md:block">
+         <img 
+           src="https://thesunvizors.com/wp-content/uploads/2024/12/OR-THE-SUNVIZORS-2018-seul-sansFOND.png" 
+           alt="The Sunvizors" 
+           className="w-24 drop-shadow-md opacity-90 hover:opacity-100 transition-opacity"
+         />
+      </div>
       
       <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-4">
            <button 
