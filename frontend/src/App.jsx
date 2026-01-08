@@ -4,6 +4,7 @@ import VoteModal from './components/VoteModal';
 import Leaderboard from './components/Leaderboard';
 import AdminDashboard from './components/AdminDashboard';
 import ShareModal from './components/ShareModal';
+import WelcomeScreen from './components/WelcomeScreen';
 import axios from 'axios';
 
 // Configuration de l'URL de l'API
