@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
 import html2canvas from 'html2canvas';
 
 const VoteModal = ({ city, onClose, onVoteSuccess }) => {
