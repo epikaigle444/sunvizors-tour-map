@@ -54,11 +54,11 @@ function App() {
         <Leaderboard stats={stats} />
       </div>
 
-      <div className="absolute top-4 left-4 z-[1000] hidden md:block">
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000]">
          <img 
            src="https://thesunvizors.com/wp-content/uploads/2024/12/OR-THE-SUNVIZORS-2018-seul-sansFOND.png" 
            alt="The Sunvizors" 
-           className="w-24 drop-shadow-md opacity-90 hover:opacity-100 transition-opacity"
+           className="w-32 md:w-48 drop-shadow-md opacity-90 hover:opacity-100 transition-opacity"
          />
       </div>
       
