@@ -8,7 +8,7 @@ const AdminDashboard = ({ onClose, stats }) => {
 
   const downloadCSV = () => {
     const baseUrl = axios.defaults.baseURL || '';
-    window.open(`${baseUrl}/api/export_csv`, '_blank');
+    window.open(`${baseUrl}/api/export.php`, '_blank');
   };
 
   const handleCityClick = async (city) => {
@@ -20,7 +20,7 @@ const AdminDashboard = ({ onClose, stats }) => {
     setExpandedCity(city);
     setLoadingDetails(true);
     try {
-      const res = await axios.get(`/api/votes/${city}`);
+      const res = await axios.get(`/api/stats.php?city=${encodeURIComponent(city)}`);
       setCityDetails(res.data);
     } catch (err) {
       console.error("Error fetching city details", err);
