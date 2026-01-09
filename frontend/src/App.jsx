@@ -4,6 +4,7 @@ import VoteModal from './components/VoteModal';
 import Leaderboard from './components/Leaderboard';
 import AdminDashboard from './components/AdminDashboard';
 import ShareModal from './components/ShareModal';
+import InfoModal from './components/InfoModal';
 import WelcomeScreen from './components/WelcomeScreen';
 import axios from 'axios';
 
@@ -16,6 +17,7 @@ function App() {
   const [stats, setStats] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
 
   const fetchStats = async () => {
     try {
@@ -79,6 +81,16 @@ function App() {
 
       </div>
 
+      {/* BOUTON INFO (Mobile Only - Top Left under Leaderboard) */}
+      <div className="md:hidden absolute top-40 left-4 z-[900]">
+         <button 
+            onClick={() => setIsInfoOpen(true)}
+            className="w-8 h-8 bg-black/80 border border-gold/50 text-gold rounded-full flex items-center justify-center shadow-lg"
+         >
+            <span className="font-serif italic font-bold text-sm">i</span>
+         </button>
+      </div>
+
       {/* LOGO (Centered Top - Hidden on Mobile to avoid overlap) */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] hidden md:block">
          <img 
@@ -129,6 +141,10 @@ function App() {
           city={selectedCity} 
           leaderboard={stats} 
         />
+      )}
+
+      {isInfoOpen && (
+        <InfoModal onClose={() => setIsInfoOpen(false)} />
       )}
     </div>
   );
