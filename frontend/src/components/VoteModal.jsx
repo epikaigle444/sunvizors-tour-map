@@ -49,9 +49,13 @@ const VoteModal = ({ city, onClose, onVoteSuccess, onOpenShare }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Détection : si on est sur LWS (PHP), on utilise ?id=, sinon path /id
+      // Détection de l'environnement pour choisir le format d'URL
       const isPHP = !window.location.hostname.includes('vercel.app') && !window.location.hostname.includes('localhost');
-      const url = isPHP ? `/api/vote.php?id=${voteId}` : `/api/vote/${voteId}`;
+      
+      // On construit l'URL proprement selon le serveur
+      const url = isPHP 
+        ? `api/vote.php?id=${voteId}` 
+        : `/api/vote/${voteId}`;
       
       await axios.put(url, details);
       setStep(3); // Success Screen
