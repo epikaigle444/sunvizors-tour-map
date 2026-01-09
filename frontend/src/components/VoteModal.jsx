@@ -33,7 +33,7 @@ const VoteModal = ({ city, onClose, onVoteSuccess, onOpenShare }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.post('api/vote.php', { email, city });
+      const res = await axios.post('/api/vote', { email, city });
       setVoteId(res.data.id);
       setStep(2);
       onVoteSuccess(); // Refresh stats immediately
@@ -51,7 +51,7 @@ const VoteModal = ({ city, onClose, onVoteSuccess, onOpenShare }) => {
     try {
       // Détection : si on est sur LWS (PHP), on utilise ?id=, sinon path /id
       const isPHP = !window.location.hostname.includes('vercel.app') && !window.location.hostname.includes('localhost');
-      const url = isPHP ? `api/vote.php.php?id=${voteId}` : `api/vote.php/${voteId}`;
+      const url = isPHP ? `/api/vote.php?id=${voteId}` : `/api/vote/${voteId}`;
       
       await axios.put(url, details);
       setStep(3); // Success Screen
