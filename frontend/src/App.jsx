@@ -28,7 +28,7 @@ function App() {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get('/api/stats.php');
+      const res = await axios.get('/api/stats');
       setStats(res.data);
     } catch (err) {
       console.error("Failed to fetch stats", err);

@@ -33,7 +33,7 @@ const VoteModal = ({ city, onClose, onVoteSuccess, onOpenShare }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.post('/api/vote.php', { email, city });
+      const res = await axios.post('/api/vote', { email, city });
       setVoteId(res.data.id);
       setStep(2);
       onVoteSuccess(); // Refresh stats immediately
@@ -49,7 +49,7 @@ const VoteModal = ({ city, onClose, onVoteSuccess, onOpenShare }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.put(`/api/vote.php?id=${voteId}`, details);
+      await axios.put(`/api/vote/${voteId}`, details);
       setStep(3); // Success Screen
     } catch (err) {
       setError("Erreur lors de l'enregistrement des détails.");
