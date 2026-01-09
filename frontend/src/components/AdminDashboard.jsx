@@ -6,10 +6,13 @@ const AdminDashboard = ({ onClose, stats }) => {
   const [cityDetails, setCityDetails] = useState([]);
   const [loadingDetails, setLoadingDetails] = useState(false);
 
+  // Détection auto
+  const isPHP = !window.location.hostname.includes('vercel.app') && !window.location.hostname.includes('localhost');
+
   const downloadCSV = () => {
     const baseUrl = axios.defaults.baseURL || '';
-    // On ajoute le mot de passe pour autoriser l'export
-    window.open(`${baseUrl}/api/export_csv?pass=sun`, '_blank');
+    const endpoint = isPHP ? 'api/export.php' : '/api/export_csv';
+    window.open(`${baseUrl}${endpoint}?pass=sun`, '_blank');
   };
 
   const handleCityClick = async (city) => {
@@ -21,8 +24,8 @@ const AdminDashboard = ({ onClose, stats }) => {
     setExpandedCity(city);
     setLoadingDetails(true);
     try {
-      // On ajoute le mot de passe pour autoriser la lecture des détails
-      const res = await axios.get(`/api/votes/${encodeURIComponent(city)}?pass=sun`);
+      const endpoint = isPHP ? 'api/stats.php' : `/api/votes/${encodeURIComponent(city)}`;
+      const res = await axios.get(`${endpoint}?pass=sun`);
       setCityDetails(res.data);
     } catch (err) {
       console.error("Error fetching city details", err);

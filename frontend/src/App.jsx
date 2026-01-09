@@ -28,8 +28,11 @@ function App() {
 
   const fetchStats = async () => {
     try {
-      // On ajoute un timestamp (?t=...) pour forcer le navigateur à ignorer le cache
-      const res = await axios.get(`/api/stats?t=${new Date().getTime()}`);
+      // Détection auto : si on n'est pas sur Vercel ni localhost, on est sur LWS
+      const isPHP = !window.location.hostname.includes('vercel.app') && !window.location.hostname.includes('localhost');
+      const endpoint = isPHP ? 'api/stats.php' : '/api/stats';
+      
+      const res = await axios.get(`${endpoint}?t=${new Date().getTime()}`);
       setStats(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Failed to fetch stats", err);
