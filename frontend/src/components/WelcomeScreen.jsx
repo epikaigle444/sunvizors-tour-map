@@ -60,29 +60,27 @@ const WelcomeScreen = ({ onStart }) => {
             transition={{ delay: 0.5 }}
             className="max-w-lg"
           >
-            {inviteCity ? (
-               <div className="bg-gold/10 border border-gold/50 p-4 rounded mb-6">
+            {inviteCity && (
+               <div className="bg-gold/10 border border-gold/50 p-4 rounded mb-6 shadow-[0_0_20px_rgba(204,165,44,0.1)]">
                  <p className="text-gold font-bold text-lg uppercase tracking-widest mb-1">Invitation Spéciale !</p>
-                 <p className="text-white text-md">Viens aider tes amis et vote pour <span className="font-bold text-gold">{inviteCity}</span> !</p>
+                 <p className="text-white text-md">Viens aider tes amis et vote pour <span className="font-bold text-gold underline">{inviteCity}</span> !</p>
                </div>
-            ) : (
-               <>
-                <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tighter">
-                  LA TOURNÉE <span className="text-gold">PARTICIPATIVE</span>
-                </h1>
-                <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-                  Nous voulons venir jouer près de chez vous.<br/>
-                  Votez pour votre ville et construisons cette tournée ensemble.
-                </p>
-               </>
             )}
+
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tighter uppercase">
+              LA TOURNÉE <span className="text-gold">PARTICIPATIVE</span>
+            </h1>
+            <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+              Nous voulons venir jouer près de chez vous.<br/>
+              Votez pour votre ville et construisons cette tournée ensemble.
+            </p>
 
             <button 
               onClick={handleStart}
               className="group relative px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold uppercase tracking-[0.2em] transition-all hover:bg-gold hover:text-black"
             >
               <span className="absolute inset-0 w-full h-full bg-gold/20 blur-xl opacity-0 group-hover:opacity-50 transition-opacity"></span>
-              {inviteCity ? "JE VOTE MAINTENANT" : "ACCÉDER À LA CARTE"}
+              {inviteCity ? "JE VOTE POUR " + inviteCity.toUpperCase() : "ACCÉDER À LA CARTE"}
             </button>
           </motion.div>
         </motion.div>

@@ -64,11 +64,11 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
 
           {/* 2. INVITER AMIS */}
           <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-            <h3 className="text-sm font-bold text-gray-300 uppercase mb-2">💌 Inviter des amis</h3>
+            <h3 className="text-sm font-bold text-gray-300 uppercase mb-3">💌 Inviter des amis</h3>
             
             {/* City Selector */}
-            <div className="mb-3">
-              <label className="text-[10px] text-gray-500 uppercase tracking-wide block mb-1">Choisir la ville à soutenir :</label>
+            <div className="mb-4">
+              <label className="text-xs text-gold font-bold uppercase tracking-widest block mb-2">Choisir la ville à soutenir :</label>
               <select 
                 value={selectedInviteCity}
                 onChange={(e) => setSelectedInviteCity(e.target.value)}
