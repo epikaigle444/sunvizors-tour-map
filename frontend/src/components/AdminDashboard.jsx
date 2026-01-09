@@ -8,7 +8,8 @@ const AdminDashboard = ({ onClose, stats }) => {
 
   const downloadCSV = () => {
     const baseUrl = axios.defaults.baseURL || '';
-    window.open(`${baseUrl}/api/export.php`, '_blank');
+    // On ajoute le mot de passe pour autoriser l'export
+    window.open(`${baseUrl}/api/export.php?pass=sun`, '_blank');
   };
 
   const handleCityClick = async (city) => {
@@ -20,7 +21,8 @@ const AdminDashboard = ({ onClose, stats }) => {
     setExpandedCity(city);
     setLoadingDetails(true);
     try {
-      const res = await axios.get(`/api/stats.php?city=${encodeURIComponent(city)}`);
+      // On ajoute le mot de passe pour autoriser la lecture des détails
+      const res = await axios.get(`/api/stats.php?city=${encodeURIComponent(city)}&pass=sun`);
       setCityDetails(res.data);
     } catch (err) {
       console.error("Error fetching city details", err);
