@@ -1,7 +1,8 @@
 import React from 'react';
 
 const Leaderboard = ({ stats, onShare, onOpenFull }) => {
-  const topStats = stats.slice(0, 5);
+  // Sécurité : s'assurer que stats est bien un tableau
+  const topStats = Array.isArray(stats) ? stats.slice(0, 5) : [];
   
   return (
     <div 

@@ -6,9 +6,9 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
   const siteUrl = window.location.origin;
   const [selectedInviteCity, setSelectedInviteCity] = useState(city || (leaderboard && leaderboard.length > 0 ? leaderboard[0].city : "Paris"));
 
-  // --- TEXT GENERATORS ---
+  // 1. Classement (Texte formaté)
   const getLeaderboardText = () => {
-    if (!leaderboard || leaderboard.length === 0) return "Découvre le classement pour la tournée The Sunvizors !";
+    if (!Array.isArray(leaderboard) || leaderboard.length === 0) return "Découvre le classement pour la tournée The Sunvizors !";
     const top5 = leaderboard.slice(0, 5).map((item, i) => `${i+1}. ${item.city}`).join(' | ');
     return `🔥 Le Top 5 pour la tournée The Sunvizors : ${top5}... Est-ce que ta ville y est ? Vote ici :`;
   };
