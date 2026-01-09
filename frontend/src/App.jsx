@@ -5,6 +5,7 @@ import Leaderboard from './components/Leaderboard';
 import AdminDashboard from './components/AdminDashboard';
 import ShareModal from './components/ShareModal';
 import InfoModal from './components/InfoModal';
+import FullLeaderboardModal from './components/FullLeaderboardModal';
 import WelcomeScreen from './components/WelcomeScreen';
 import axios from 'axios';
 
@@ -18,6 +19,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
 
   const fetchStats = async () => {
     try {
@@ -57,7 +59,11 @@ function App() {
         
         {/* LEADERBOARD (Top) */}
         <div id="leaderboard-container" className="pointer-events-auto">
-          <Leaderboard stats={stats} onShare={() => setIsShareOpen(true)} />
+          <Leaderboard 
+            stats={stats} 
+            onShare={() => setIsShareOpen(true)} 
+            onOpenFull={() => setIsLeaderboardOpen(true)}
+          />
         </div>
 
         {/* INFO BOXES (Below - Hidden on Mobile) */}
@@ -144,6 +150,10 @@ function App() {
 
       {isInfoOpen && (
         <InfoModal onClose={() => setIsInfoOpen(false)} />
+      )}
+
+      {isLeaderboardOpen && (
+        <FullLeaderboardModal onClose={() => setIsLeaderboardOpen(false)} stats={stats} />
       )}
     </div>
   );
