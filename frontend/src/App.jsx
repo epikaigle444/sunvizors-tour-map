@@ -28,7 +28,8 @@ function App() {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get('/api/stats');
+      // On ajoute un timestamp (?t=...) pour forcer le navigateur à ignorer le cache
+      const res = await axios.get(`api/stats.php?t=${new Date().getTime()}`);
       setStats(res.data);
     } catch (err) {
       console.error("Failed to fetch stats", err);
