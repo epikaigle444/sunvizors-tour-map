@@ -36,8 +36,9 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`, '_blank');
     } else if (platform === 'twitter') {
       window.open(`https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`, '_blank');
-    } else if (platform === 'whatsapp') {
-      window.open(`https://wa.me/?text=${encodedText} ${encodedUrl}`, '_blank');
+    } else if (platform === 'instagram') {
+      navigator.clipboard.writeText(url);
+      alert('Lien copié ! Collez-le dans votre story ou bio Instagram.');
     } else if (platform === 'copy') {
       navigator.clipboard.writeText(`${text} ${url}`);
       alert('Lien copié !');
@@ -64,7 +65,8 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
             <div className="flex justify-between gap-2">
                <ShareBtn icon="f" color="bg-blue-600" onClick={() => shareTo('facebook', getLeaderboardText(), siteUrl)} />
                <ShareBtn icon="X" color="bg-black border border-white/20" onClick={() => shareTo('twitter', getLeaderboardText(), siteUrl)} />
-               <ShareBtn icon="wa" color="bg-green-500" label="WhatsApp" onClick={() => shareTo('whatsapp', getLeaderboardText(), siteUrl)} />
+               <ShareBtn icon="Insta" color="bg-pink-600" onClick={() => shareTo('instagram', getLeaderboardText(), siteUrl)} />
+               <ShareBtn icon="🔗" color="bg-gray-600" onClick={() => shareTo('copy', getLeaderboardText(), siteUrl)} />
             </div>
           </div>
 
@@ -74,8 +76,8 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
             <div className="flex justify-between gap-2">
                <ShareBtn icon="f" color="bg-blue-600" onClick={() => shareTo('facebook', getInviteText(), getInviteUrl())} />
                <ShareBtn icon="X" color="bg-black border border-white/20" onClick={() => shareTo('twitter', getInviteText(), getInviteUrl())} />
-               <ShareBtn icon="wa" color="bg-green-500" label="WhatsApp" onClick={() => shareTo('whatsapp', getInviteText(), getInviteUrl())} />
-               <ShareBtn icon="🔗" color="bg-gray-600" label="Copier" onClick={() => shareTo('copy', getInviteText(), getInviteUrl())} />
+               <ShareBtn icon="Insta" color="bg-pink-600" onClick={() => shareTo('instagram', getInviteText(), getInviteUrl())} />
+               <ShareBtn icon="🔗" color="bg-gray-600" onClick={() => shareTo('copy', getInviteText(), getInviteUrl())} />
             </div>
           </div>
 
@@ -85,7 +87,8 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
             <div className="flex justify-between gap-2">
                <ShareBtn icon="f" color="bg-blue-600" onClick={() => shareTo('facebook', getMapText(), siteUrl)} />
                <ShareBtn icon="X" color="bg-black border border-white/20" onClick={() => shareTo('twitter', getMapText(), siteUrl)} />
-               <ShareBtn icon="wa" color="bg-green-500" label="WhatsApp" onClick={() => shareTo('whatsapp', getMapText(), siteUrl)} />
+               <ShareBtn icon="Insta" color="bg-pink-600" onClick={() => shareTo('instagram', getMapText(), siteUrl)} />
+               <ShareBtn icon="🔗" color="bg-gray-600" onClick={() => shareTo('copy', getMapText(), siteUrl)} />
             </div>
           </div>
 
