@@ -7,6 +7,7 @@ import ShareModal from './components/ShareModal';
 import InfoModal from './components/InfoModal';
 import FullLeaderboardModal from './components/FullLeaderboardModal';
 import WelcomeScreen from './components/WelcomeScreen';
+import LoginScreen from './components/LoginScreen';
 import axios from 'axios';
 
 // Configuration de l'URL de l'API
@@ -16,7 +17,11 @@ axios.defaults.baseURL = API_BASE_URL;
 function App() {
   const [selectedCity, setSelectedCity] = useState(null);
   const [stats, setStats] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false);
+  
+  // États d'administration
+  const [isAdminRoute, setIsAdminRoute] = useState(false); // Est-on sur l'URL /admin ?
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // A-t-on le mot de passe ?
+
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
@@ -34,20 +39,21 @@ function App() {
     fetchStats();
     const interval = setInterval(fetchStats, 30000);
     
-    const handleKeyDown = (e) => {
-      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        setIsAdmin(true);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    // Vérification de l'URL pour le mode Admin
+    if (window.location.pathname === '/admin') {
+      setIsAdminRoute(true);
+    }
+
+    return () => clearInterval(interval);
   }, []);
 
-  if (isAdmin) {
-    return <AdminDashboard onClose={() => setIsAdmin(false)} stats={stats} />;
+  // Si on est sur /admin
+  if (isAdminRoute) {
+    if (isAuthenticated) {
+      return <AdminDashboard onClose={() => window.location.href = '/'} stats={stats} />;
+    } else {
+      return <LoginScreen onLoginSuccess={() => setIsAuthenticated(true)} />;
+    }
   }
 
   return (
@@ -119,16 +125,6 @@ function App() {
          />
       </div>
       
-      {/* BOUTON ADMIN (Haut Droite) */}
-      <div className="absolute top-4 right-4 z-[1000]">
-           <button 
-              onClick={() => setIsAdmin(true)}
-              className="px-3 py-1 text-[10px] bg-gold text-black hover:bg-yellow-500 transition-all uppercase tracking-widest font-bold rounded shadow-lg"
-           >
-              Admin
-           </button>
-      </div>
-
       <MapComponent onCitySelect={setSelectedCity} />
 
       {selectedCity && (
