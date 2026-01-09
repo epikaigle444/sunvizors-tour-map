@@ -15,7 +15,7 @@ const FullLeaderboardModal = ({ onClose, stats }) => {
         <h2 className="text-xl font-bold text-gold mb-6 text-center uppercase tracking-widest shrink-0">Classement Complet</h2>
 
         <div className="overflow-y-auto custom-scrollbar flex-1 pr-2 space-y-2">
-          {stats.map((item, index) => (
+          {Array.isArray(stats) && stats.map((item, index) => (
             <div key={item.city} className="flex justify-between items-center bg-white/5 p-3 rounded border border-white/10 hover:border-gold/50 transition-colors">
               <div className="flex items-center space-x-3">
                 <span className={`font-mono font-bold w-8 text-center ${index < 3 ? 'text-gold text-lg' : 'text-gray-500'}`}>

@@ -30,9 +30,10 @@ function App() {
     try {
       // On ajoute un timestamp (?t=...) pour forcer le navigateur à ignorer le cache
       const res = await axios.get(`/api/stats?t=${new Date().getTime()}`);
-      setStats(res.data);
+      setStats(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Failed to fetch stats", err);
+      setStats([]);
     }
   };
 
