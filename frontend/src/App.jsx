@@ -50,6 +50,33 @@ function App() {
     <div className="relative w-full h-screen bg-black overflow-hidden" id="map-container">
       <WelcomeScreen onStart={() => {}} />
 
+      {/* --- SIDEBAR EXPLICATIVE (Desktop Only) --- */}
+      <div className="hidden md:flex absolute top-0 left-0 h-full w-[280px] z-[900] bg-neutral-900/90 backdrop-blur border-r border-gold/20 p-6 flex-col shadow-2xl pointer-events-auto">
+        <div className="mt-20 space-y-6">
+           <div className="p-4 bg-black/40 rounded border border-gray-800">
+              <h3 className="text-gold text-sm font-bold uppercase mb-2 tracking-widest">Le concept</h3>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                <strong className="text-white">The Sunvizors</strong> préparent leur tournée 2026. 
+                <br/><br/>
+                Votez pour faire venir le groupe dans votre ville ! Les villes avec le plus de votes seront prioritaires.
+              </p>
+           </div>
+           
+           <div className="p-4 bg-black/40 rounded border border-gray-800">
+              <h3 className="text-gold text-sm font-bold uppercase mb-2 tracking-widest">Comment participer ?</h3>
+              <ul className="text-xs text-gray-400 space-y-2 list-disc pl-4">
+                <li>Cliquez sur un point sur la carte</li>
+                <li>Entrez votre email pour voter</li>
+                <li>Partagez pour grimper au classement !</li>
+              </ul>
+           </div>
+        </div>
+        
+        <div className="mt-auto pt-6 border-t border-gray-800">
+            <p className="text-[10px] text-gray-600 text-center">© 2026 The Sunvizors</p>
+        </div>
+      </div>
+
       <div id="leaderboard-container">
         <Leaderboard stats={stats} />
       </div>
@@ -62,18 +89,27 @@ function App() {
          />
       </div>
       
-      <div className="absolute top-4 right-4 z-[1000] flex items-center space-x-4">
-           <button 
-              onClick={() => setIsShareOpen(true)}
-              className="px-4 py-2 text-xs bg-white text-black hover:bg-gray-200 transition-all uppercase tracking-widest font-bold rounded shadow-lg border border-gray-300"
-           >
-              Partager
-           </button>
+      {/* BOUTON ADMIN (Haut Droite) */}
+      <div className="absolute top-4 right-4 z-[1000]">
            <button 
               onClick={() => setIsAdmin(true)}
               className="px-3 py-1 text-[10px] bg-gold text-black hover:bg-yellow-500 transition-all uppercase tracking-widest font-bold rounded shadow-lg"
            >
               Admin
+           </button>
+      </div>
+
+      {/* BOUTON PARTAGER (Bas Gauche) */}
+      <div className="absolute bottom-8 left-8 z-[1000]">
+           <button 
+              onClick={() => setIsShareOpen(true)}
+              className="w-12 h-12 md:w-auto md:h-auto md:px-6 md:py-3 bg-white text-black hover:bg-gold hover:text-black transition-all font-bold rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 group"
+           >
+              {/* Icone Partage */}
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+              </svg>
+              <span className="hidden md:inline text-xs uppercase tracking-widest">Partager</span>
            </button>
       </div>
 

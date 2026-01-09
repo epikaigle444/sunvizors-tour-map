@@ -1,31 +1,27 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { cities } from '../data/cities';
 
 const ShareModal = ({ onClose, city, leaderboard }) => {
-  const siteUrl = window.location.origin; // e.g., https://sunvizors-tour.vercel.app
+  const siteUrl = window.location.origin;
+  const [selectedInviteCity, setSelectedInviteCity] = useState(city || (leaderboard && leaderboard.length > 0 ? leaderboard[0].city : "Paris"));
 
   // --- TEXT GENERATORS ---
-  
-  // 1. Classement (Texte formaté)
   const getLeaderboardText = () => {
     if (!leaderboard || leaderboard.length === 0) return "Découvre le classement pour la tournée The Sunvizors !";
     const top3 = leaderboard.slice(0, 3).map((item, i) => `${i+1}. ${item.city}`).join(' | ');
     return `🔥 Le Top 3 pour la tournée The Sunvizors : ${top3}... Est-ce que ta ville y est ? Vote ici :`;
   };
 
-  // 2. Invitation (Lien avec paramètre city si disponible)
   const getInviteText = () => {
-    return city 
-      ? `Viens m'aider à faire venir The Sunvizors à ${city} ! On a besoin de ton vote !`
-      : "Viens voter pour ta ville et aide-nous à construire la tournée The Sunvizors !";
+    return `Viens m'aider à faire venir The Sunvizors à ${selectedInviteCity} ! On a besoin de ton vote !`;
   };
+  
   const getInviteUrl = () => {
-    return city ? `${siteUrl}?city=${encodeURIComponent(city)}` : siteUrl;
+    return `${siteUrl}?city=${encodeURIComponent(selectedInviteCity)}`;
   };
 
-  // 3. Carte (Lien simple)
   const getMapText = () => "Regarde la carte interactive de la tournée The Sunvizors et vote pour ta ville !";
-
 
   // --- SHARE HANDLERS ---
   const shareTo = (platform, text, url) => {
@@ -36,9 +32,6 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`, '_blank');
     } else if (platform === 'twitter') {
       window.open(`https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`, '_blank');
-    } else if (platform === 'instagram') {
-      navigator.clipboard.writeText(url);
-      alert('Lien copié ! Collez-le dans votre story ou bio Instagram.');
     } else if (platform === 'copy') {
       navigator.clipboard.writeText(`${text} ${url}`);
       alert('Lien copié !');
@@ -65,18 +58,31 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
             <div className="flex justify-between gap-2">
                <ShareBtn icon="f" color="bg-blue-600" onClick={() => shareTo('facebook', getLeaderboardText(), siteUrl)} />
                <ShareBtn icon="X" color="bg-black border border-white/20" onClick={() => shareTo('twitter', getLeaderboardText(), siteUrl)} />
-               <ShareBtn icon="Insta" color="bg-pink-600" onClick={() => shareTo('instagram', getLeaderboardText(), siteUrl)} />
                <ShareBtn icon="🔗" color="bg-gray-600" onClick={() => shareTo('copy', getLeaderboardText(), siteUrl)} />
             </div>
           </div>
 
           {/* 2. INVITER AMIS */}
           <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-            <h3 className="text-sm font-bold text-gray-300 uppercase mb-2">💌 Inviter des amis {city && `à ${city}`}</h3>
+            <h3 className="text-sm font-bold text-gray-300 uppercase mb-2">💌 Inviter des amis</h3>
+            
+            {/* City Selector */}
+            <div className="mb-3">
+              <label className="text-[10px] text-gray-500 uppercase tracking-wide block mb-1">Choisir la ville à soutenir :</label>
+              <select 
+                value={selectedInviteCity}
+                onChange={(e) => setSelectedInviteCity(e.target.value)}
+                className="w-full bg-black border border-gray-700 text-white text-sm p-2 rounded focus:border-gold outline-none"
+              >
+                {cities.sort((a,b) => a.name.localeCompare(b.name)).map(c => (
+                  <option key={c.name} value={c.name}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+
             <div className="flex justify-between gap-2">
                <ShareBtn icon="f" color="bg-blue-600" onClick={() => shareTo('facebook', getInviteText(), getInviteUrl())} />
                <ShareBtn icon="X" color="bg-black border border-white/20" onClick={() => shareTo('twitter', getInviteText(), getInviteUrl())} />
-               <ShareBtn icon="Insta" color="bg-pink-600" onClick={() => shareTo('instagram', getInviteText(), getInviteUrl())} />
                <ShareBtn icon="🔗" color="bg-gray-600" onClick={() => shareTo('copy', getInviteText(), getInviteUrl())} />
             </div>
           </div>
@@ -87,7 +93,6 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
             <div className="flex justify-between gap-2">
                <ShareBtn icon="f" color="bg-blue-600" onClick={() => shareTo('facebook', getMapText(), siteUrl)} />
                <ShareBtn icon="X" color="bg-black border border-white/20" onClick={() => shareTo('twitter', getMapText(), siteUrl)} />
-               <ShareBtn icon="Insta" color="bg-pink-600" onClick={() => shareTo('instagram', getMapText(), siteUrl)} />
                <ShareBtn icon="🔗" color="bg-gray-600" onClick={() => shareTo('copy', getMapText(), siteUrl)} />
             </div>
           </div>
