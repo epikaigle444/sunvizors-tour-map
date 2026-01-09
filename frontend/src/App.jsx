@@ -81,14 +81,27 @@ function App() {
 
       </div>
 
-      {/* BOUTON INFO (Mobile Only - Top Left under Leaderboard) */}
-      <div className="md:hidden absolute top-40 left-4 z-[900]">
-         <button 
-            onClick={() => setIsInfoOpen(true)}
-            className="w-8 h-8 bg-black/80 border border-gold/50 text-gold rounded-full flex items-center justify-center shadow-lg"
-         >
-            <span className="font-serif italic font-bold text-sm">i</span>
-         </button>
+      {/* BOUTONS ACTIONS (Bas Gauche) */}
+      <div className="absolute bottom-24 left-4 md:bottom-8 md:left-8 z-[1000] flex flex-col gap-3">
+           {/* Bouton Info (Mobile Only) */}
+           <button 
+              onClick={() => setIsInfoOpen(true)}
+              className="md:hidden w-12 h-12 bg-black/80 border border-gold/50 text-gold rounded-full flex items-center justify-center shadow-lg pointer-events-auto"
+           >
+              <span className="font-serif italic font-bold text-xl">i</span>
+           </button>
+
+           {/* Bouton Partager */}
+           <button 
+              onClick={() => setIsShareOpen(true)}
+              className="w-12 h-12 md:w-auto md:h-auto md:px-6 md:py-3 bg-white text-black hover:bg-gold hover:text-black transition-all font-bold rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 group pointer-events-auto"
+           >
+              {/* Icone Partage */}
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+              </svg>
+              <span className="hidden md:inline text-xs uppercase tracking-widest">Partager</span>
+           </button>
       </div>
 
       {/* LOGO (Centered Top - Hidden on Mobile to avoid overlap) */}
@@ -109,13 +122,6 @@ function App() {
               Admin
            </button>
       </div>
-
-      {/* BOUTON PARTAGER (Bas Gauche - Remonté sur mobile) */}
-      <div className="absolute bottom-24 left-4 md:bottom-8 md:left-8 z-[1000]">
-           <button 
-              onClick={() => setIsShareOpen(true)}
-              className="w-12 h-12 md:w-auto md:h-auto md:px-6 md:py-3 bg-white text-black hover:bg-gold hover:text-black transition-all font-bold rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 group"
-           >
               {/* Icone Partage */}
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
