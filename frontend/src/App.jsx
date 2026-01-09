@@ -55,21 +55,21 @@ function App() {
         
         {/* LEADERBOARD (Top) */}
         <div id="leaderboard-container" className="pointer-events-auto">
-          <Leaderboard stats={stats} />
+          <Leaderboard stats={stats} onShare={() => setIsShareOpen(true)} />
         </div>
 
         {/* INFO BOXES (Below - Hidden on Mobile) */}
         <div className="hidden md:flex flex-col gap-4 pointer-events-auto">
            <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg">
-              <h3 className="text-gold text-xs font-bold uppercase mb-2 tracking-widest border-b border-gray-700 pb-1">Le concept</h3>
-              <p className="text-[10px] text-gray-300 leading-relaxed">
+              <h3 className="text-gold text-sm font-bold uppercase mb-2 tracking-widest border-b border-gray-700 pb-1">Le concept</h3>
+              <p className="text-sm text-gray-300 leading-relaxed">
                 <strong className="text-white">The Sunvizors</strong> préparent leur tournée 2026. Votez pour faire venir le groupe dans votre ville !
               </p>
            </div>
            
            <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg">
-              <h3 className="text-gold text-xs font-bold uppercase mb-2 tracking-widest border-b border-gray-700 pb-1">Comment participer ?</h3>
-              <ul className="text-[10px] text-gray-300 space-y-1 list-disc pl-3">
+              <h3 className="text-gold text-sm font-bold uppercase mb-2 tracking-widest border-b border-gray-700 pb-1">Comment participer ?</h3>
+              <ul className="text-sm text-gray-300 space-y-1 list-disc pl-4">
                 <li>Cliquez sur un point sur la carte</li>
                 <li>Entrez votre email pour voter</li>
                 <li>Partagez pour grimper au classement !</li>
