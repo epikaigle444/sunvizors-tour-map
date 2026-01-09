@@ -9,7 +9,7 @@ const Leaderboard = ({ stats, onShare }) => {
         <h3 className="text-gold font-bold uppercase tracking-wider text-sm">Top 5 Villes</h3>
         <button 
           onClick={onShare}
-          className="text-gray-400 hover:text-gold transition-colors"
+          className="text-gray-400 hover:text-gold transition-colors hidden md:block"
           title="Partager le classement"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">

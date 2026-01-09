@@ -79,8 +79,8 @@ function App() {
 
       </div>
 
-      {/* LOGO (Centered Top) */}
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000]">
+      {/* LOGO (Centered Top - Hidden on Mobile to avoid overlap) */}
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] hidden md:block">
          <img 
            src="https://thesunvizors.com/wp-content/uploads/2024/12/OR-THE-SUNVIZORS-2018-seul-sansFOND.png" 
            alt="The Sunvizors" 
@@ -98,8 +98,8 @@ function App() {
            </button>
       </div>
 
-      {/* BOUTON PARTAGER (Bas Gauche) */}
-      <div className="absolute bottom-8 left-8 z-[1000]">
+      {/* BOUTON PARTAGER (Bas Gauche - Remonté sur mobile) */}
+      <div className="absolute bottom-24 left-4 md:bottom-8 md:left-8 z-[1000]">
            <button 
               onClick={() => setIsShareOpen(true)}
               className="w-12 h-12 md:w-auto md:h-auto md:px-6 md:py-3 bg-white text-black hover:bg-gold hover:text-black transition-all font-bold rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] flex items-center justify-center gap-2 group"
