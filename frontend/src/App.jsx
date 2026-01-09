@@ -124,6 +124,15 @@ function App() {
            className="w-32 md:w-48 drop-shadow-md opacity-90 hover:opacity-100 transition-opacity"
          />
       </div>
+
+      {/* LOGO MOBILE (Haut Droite - Remplace le bouton Admin) */}
+      <div className="absolute top-4 right-4 z-[1000] md:hidden">
+         <img 
+           src="https://thesunvizors.com/wp-content/uploads/2024/12/OR-THE-SUNVIZORS-2018-seul-sansFOND.png" 
+           alt="The Sunvizors" 
+           className="w-20 drop-shadow-md"
+         />
+      </div>
       
       <MapComponent onCitySelect={setSelectedCity} />
 

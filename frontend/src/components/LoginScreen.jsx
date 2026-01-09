@@ -10,7 +10,7 @@ const LoginScreen = ({ onLoginSuccess }) => {
     // Mot de passe en dur (Tu pourras le changer ici)
     // Pour une sécurité maximale, on utiliserait des variables d'environnement, 
     // mais pour ce projet, c'est suffisant.
-    if (password === 'sunvizors2026') { 
+    if (password === 'sun') { 
       onLoginSuccess();
     } else {
       setError(true);
