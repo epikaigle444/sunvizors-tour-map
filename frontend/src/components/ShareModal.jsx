@@ -9,8 +9,8 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
   // --- TEXT GENERATORS ---
   const getLeaderboardText = () => {
     if (!leaderboard || leaderboard.length === 0) return "Découvre le classement pour la tournée The Sunvizors !";
-    const top3 = leaderboard.slice(0, 3).map((item, i) => `${i+1}. ${item.city}`).join(' | ');
-    return `🔥 Le Top 3 pour la tournée The Sunvizors : ${top3}... Est-ce que ta ville y est ? Vote ici :`;
+    const top5 = leaderboard.slice(0, 5).map((item, i) => `${i+1}. ${item.city}`).join(' | ');
+    return `🔥 Le Top 5 pour la tournée The Sunvizors : ${top5}... Est-ce que ta ville y est ? Vote ici :`;
   };
 
   const getInviteText = () => {
@@ -33,8 +33,8 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
     } else if (platform === 'twitter') {
       window.open(`https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`, '_blank');
     } else if (platform === 'copy') {
-      navigator.clipboard.writeText(`${text} ${url}`);
-      alert('Lien copié !');
+      navigator.clipboard.writeText(url);
+      alert('Lien du site copié !');
     }
   };
 
