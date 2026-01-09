@@ -50,37 +50,36 @@ function App() {
     <div className="relative w-full h-screen bg-black overflow-hidden" id="map-container">
       <WelcomeScreen onStart={() => {}} />
 
-      {/* --- SIDEBAR EXPLICATIVE (Desktop Only) --- */}
-      <div className="hidden md:flex absolute top-0 left-0 h-full w-[280px] z-[900] bg-neutral-900/90 backdrop-blur border-r border-gold/20 p-6 flex-col shadow-2xl pointer-events-auto">
-        <div className="mt-20 space-y-6">
-           <div className="p-4 bg-black/40 rounded border border-gray-800">
-              <h3 className="text-gold text-sm font-bold uppercase mb-2 tracking-widest">Le concept</h3>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                <strong className="text-white">The Sunvizors</strong> préparent leur tournée 2026. 
-                <br/><br/>
-                Votez pour faire venir le groupe dans votre ville ! Les villes avec le plus de votes seront prioritaires.
+      {/* --- FLOATING LEFT PANEL (Leaderboard + Info) --- */}
+      <div className="absolute top-4 left-4 z-[900] flex flex-col gap-4 max-w-[250px] pointer-events-none">
+        
+        {/* LEADERBOARD (Top) */}
+        <div id="leaderboard-container" className="pointer-events-auto">
+          <Leaderboard stats={stats} />
+        </div>
+
+        {/* INFO BOXES (Below - Hidden on Mobile) */}
+        <div className="hidden md:flex flex-col gap-4 pointer-events-auto">
+           <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg">
+              <h3 className="text-gold text-xs font-bold uppercase mb-2 tracking-widest border-b border-gray-700 pb-1">Le concept</h3>
+              <p className="text-[10px] text-gray-300 leading-relaxed">
+                <strong className="text-white">The Sunvizors</strong> préparent leur tournée 2026. Votez pour faire venir le groupe dans votre ville !
               </p>
            </div>
            
-           <div className="p-4 bg-black/40 rounded border border-gray-800">
-              <h3 className="text-gold text-sm font-bold uppercase mb-2 tracking-widest">Comment participer ?</h3>
-              <ul className="text-xs text-gray-400 space-y-2 list-disc pl-4">
+           <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg">
+              <h3 className="text-gold text-xs font-bold uppercase mb-2 tracking-widest border-b border-gray-700 pb-1">Comment participer ?</h3>
+              <ul className="text-[10px] text-gray-300 space-y-1 list-disc pl-3">
                 <li>Cliquez sur un point sur la carte</li>
                 <li>Entrez votre email pour voter</li>
                 <li>Partagez pour grimper au classement !</li>
               </ul>
            </div>
         </div>
-        
-        <div className="mt-auto pt-6 border-t border-gray-800">
-            <p className="text-[10px] text-gray-600 text-center">© 2026 The Sunvizors</p>
-        </div>
+
       </div>
 
-      <div id="leaderboard-container">
-        <Leaderboard stats={stats} />
-      </div>
-
+      {/* LOGO (Centered Top) */}
       <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000]">
          <img 
            src="https://thesunvizors.com/wp-content/uploads/2024/12/OR-THE-SUNVIZORS-2018-seul-sansFOND.png" 

@@ -4,7 +4,7 @@ const Leaderboard = ({ stats }) => {
   const topStats = stats.slice(0, 5);
   
   return (
-    <div className="absolute top-4 left-4 z-[1000] bg-black/80 backdrop-blur border border-gray-800 p-4 rounded min-w-[200px] text-white">
+    <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg w-full">
       <h3 className="text-gold font-bold uppercase tracking-wider text-sm mb-3 border-b border-gray-700 pb-2">Top 5 Villes</h3>
       <ul className="space-y-2">
         {topStats.map((item, index) => (
