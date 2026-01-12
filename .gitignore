@@ -1,21 +1,8 @@
-# Dépendances
 node_modules/
 .DS_Store
-dist/
-dev-dist
+frontend/dist/
 .env
 .env.local
-
-# Dossiers de build (Optionnel de les ignorer si vous voulez partager le code source pur)
-# DEPLOY-LWS-PHP/assets/
-# DEPLOY-LWS-PHP/index.html
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-api/*.log
-
-# IDE
-.vscode/
-.idea/
+*.log
+dist-production/assets/
+dist-production/index.html
