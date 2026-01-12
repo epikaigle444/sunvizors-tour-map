@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a1a;
+  overflow: hidden; /* Prevent scrolling when map is full screen */
+}
+
+/* Custom Pulse Animation for Map Markers */
+@keyframes pulse-gold {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(247, 220, 111, 0.7);
+  }
+  70% {
+    transform: scale(1.5);
+    box-shadow: 0 0 0 10px rgba(247, 220, 111, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(247, 220, 111, 0);
+  }
+}
+
+.marker-pulse {
+  background-color: #F7DC6F;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: block;
+  border: 2px solid white;
+  animation: pulse-gold 2s infinite;
+  cursor: pointer;
+}
+
+/* Custom Leaflet overrides */
+.leaflet-container {
+  background-color: #1a1a1a !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: #262626; /* Zinc-800 */
+  color: white;
+  border: 1px solid #F7DC6F;
+  border-radius: 0;
+}
+
+.leaflet-popup-tip {
+  background-color: #F7DC6F;
+}
+
+/* Custom Tooltip Styling */
+.custom-tooltip {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-shadow: 0px 0px 3px black;
+  letter-spacing: 0.05em;
+}
+
+/* Remove the little arrow from tooltip */
+.custom-tooltip:before {
+  display: none;
+}
+
+/* --- PERFORMANCE OPTIMIZATIONS --- */
+.modal-content {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.leaflet-fade-anim .leaflet-tile,
+.leaflet-zoom-anim .leaflet-zoom-animated {
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  /* On mobile, backdrop-filter is very expensive and can cause lag during transitions */
+  .backdrop-blur-sm {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background-color: rgba(0, 0, 0, 0.92) !important;
+  }
+}

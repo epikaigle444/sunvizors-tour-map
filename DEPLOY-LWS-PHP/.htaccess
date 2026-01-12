@@ -1,0 +1,47 @@
+# Configuration Apache pour LWS (Sunvizors Tour Map)
+
+# 1. Sécurité de base
+Options -Indexes
+ServerSignature Off
+
+# 2. Bloquer l'accès aux fichiers sensibles (Syntaxe Apache 2.4+)
+<FilesMatch "\.(sql|log|ini|sh|bak|git|env)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 3. Bloquer l'accès direct aux fichiers de configuration PHP
+<FilesMatch "^(db)\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 4. Routage pour React (Single Page Application)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Ne pas rediriger les fichiers réels ou les dossiers
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    
+    # Rediriger tout le reste vers index.html
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# 5. Forcer le HTTPS (Si SSL est actif sur LWS)
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
