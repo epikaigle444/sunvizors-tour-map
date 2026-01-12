@@ -6,3 +6,5 @@ frontend/dist/
 *.log
 dist-production/assets/
 dist-production/index.html
+backend/db.php
+dist-production/api/db.php

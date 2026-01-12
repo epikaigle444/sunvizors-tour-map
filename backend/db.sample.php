@@ -6,9 +6,9 @@ header("Content-Type: application/json; charset=UTF-8");
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit(200); }
 
 $host = "127.0.0.1";
-$db_name = "thesu2487404_8y6cfr";
-$username = "thesu2487404";
-$password = "Sunvizors2024*";
+$db_name = "VOTRE_NOM_DE_BASE";
+$username = "VOTRE_UTILISATEUR";
+$password = "VOTRE_MOT_DE_PASSE";
 
 try {
     $conn = new PDO("mysql:host=" . $host . ";dbname=" . $db_name . ";charset=utf8mb4", $username, $password, [
