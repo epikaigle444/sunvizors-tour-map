@@ -92,13 +92,14 @@ const VoteModal = ({ city, onClose, onVoteSuccess, onOpenShare }) => {
         
         {step === 1 && (
           <form onSubmit={submitStep1} className="space-y-4 py-4">
-            <p className="text-center text-sm mb-4 text-gray-300">Vote pour ta ville pour faire venir The Sunvizors !</p>
+            <p className="text-center text-sm mb-4 text-gray-300 font-light">Participez à la création de la tournée.<br/><span className="text-white font-medium">Soutenez votre ville !</span></p>
             <div>
-              <label className="block text-xs uppercase text-gray-500 mb-1">Email</label>
+              <label className="block text-[10px] uppercase text-gray-500 mb-1 tracking-widest font-bold">Votre Email</label>
               <input 
                 type="email" 
                 required 
-                className="w-full bg-black border border-gray-700 p-3 text-white focus:border-gold outline-none rounded-none"
+                placeholder="fan@exemple.com"
+                className="w-full bg-black border border-gray-700 p-3 text-white focus:border-gold outline-none rounded-none transition-all placeholder:text-gray-800"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
@@ -128,30 +129,31 @@ const VoteModal = ({ city, onClose, onVoteSuccess, onOpenShare }) => {
 
         {step === 2 && (
           <form onSubmit={submitStep2} className="space-y-3 overflow-y-auto custom-scrollbar pr-1 flex-1 py-2">
-            <p className="text-center text-sm text-green-400 font-bold mb-2">Vote pris en compte ! Dis-nous en plus.</p>
+            <p className="text-center text-sm text-green-400 font-bold mb-2 uppercase tracking-tighter">Vote enregistré ! ✨</p>
+            <p className="text-center text-[11px] text-gray-400 mb-4 italic">Aidez-nous à mieux organiser ce futur concert.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Nom</label>
-                <input required className="w-full bg-black border border-gray-700 p-2 text-white focus:border-gold outline-none" 
+                <label className="block text-[10px] uppercase text-gray-500 mb-1 font-bold">Nom</label>
+                <input required className="w-full bg-black border border-gray-700 p-2 text-white focus:border-gold outline-none text-sm" 
                   value={details.last_name} onChange={e => setDetails({...details, last_name: e.target.value})} />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Prénom</label>
-                <input required className="w-full bg-black border border-gray-700 p-2 text-white focus:border-gold outline-none" 
+                <label className="block text-[10px] uppercase text-gray-500 mb-1 font-bold">Prénom</label>
+                <input required className="w-full bg-black border border-gray-700 p-2 text-white focus:border-gold outline-none text-sm" 
                   value={details.first_name} onChange={e => setDetails({...details, first_name: e.target.value})} />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Téléphone</label>
-              <input type="tel" className="w-full bg-black border border-gray-700 p-2 text-white focus:border-gold outline-none" 
+              <label className="block text-[10px] uppercase text-gray-500 mb-1 font-bold">Téléphone <span className="text-[9px] lowercase font-normal opacity-50">(optionnel)</span></label>
+              <input type="tel" className="w-full bg-black border border-gray-700 p-2 text-white focus:border-gold outline-none text-sm" 
                  value={details.phone} onChange={e => setDetails({...details, phone: e.target.value})} />
             </div>
 
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Propose une salle de concert</label>
-              <input className="w-full bg-black border border-gray-700 p-2 text-white focus:border-gold outline-none" 
+              <label className="block text-[10px] uppercase text-gray-500 mb-1 font-bold tracking-tight">Une salle de concert à nous suggérer ?</label>
+              <input placeholder="Ex: La Carène, Le Zénith..." className="w-full bg-black border border-gray-700 p-2 text-white focus:border-gold outline-none text-sm placeholder:text-gray-800" 
                  value={details.venue_proposal} onChange={e => setDetails({...details, venue_proposal: e.target.value})} />
             </div>
 

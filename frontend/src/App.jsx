@@ -66,7 +66,7 @@ function App() {
       <WelcomeScreen onStart={() => {}} />
 
       {/* --- FLOATING LEFT PANEL (Leaderboard + Info) --- */}
-      <div className="absolute top-4 left-4 z-[900] flex flex-col gap-4 max-w-[240px] md:max-w-[280px] pointer-events-none">
+      <div className="absolute top-4 left-4 z-[900] flex flex-col gap-4 max-w-[240px] md:max-w-[280px] pointer-events-none font-['Montserrat']">
         
         {/* LEADERBOARD (Top) */}
         <div id="leaderboard-container" className="pointer-events-auto">
@@ -80,18 +80,18 @@ function App() {
         {/* INFO BOXES (Below - Hidden on Mobile) */}
         <div className="hidden md:flex flex-col gap-4 pointer-events-auto">
            <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg">
-              <h3 className="text-gold text-sm font-bold uppercase mb-2 tracking-widest border-b border-gray-700 pb-1">Le concept</h3>
-              <p className="text-sm text-gray-300 leading-relaxed">
-                <strong className="text-white">The Sunvizors</strong> préparent leur tournée 2026. Votez pour faire venir le groupe dans votre ville !
+              <h3 className="text-gold text-[10px] font-bold uppercase mb-2 tracking-[0.2em] border-b border-gray-700 pb-1">Le concept</h3>
+              <p className="text-[11px] text-gray-300 leading-relaxed font-light">
+                <strong className="text-white font-medium">The Sunvizors</strong> préparent leur tournée 2026. Votez pour faire venir le groupe dans votre ville ! Chaque voix compte pour dessiner notre route.
               </p>
            </div>
            
            <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg">
-              <h3 className="text-gold text-sm font-bold uppercase mb-2 tracking-widest border-b border-gray-700 pb-1">Comment participer ?</h3>
-              <ul className="text-sm text-gray-300 space-y-1 list-disc pl-4">
-                <li>Cliquez sur un point sur la carte</li>
-                <li>Entrez votre email pour voter</li>
-                <li>Partagez pour grimper au classement !</li>
+              <h3 className="text-gold text-[10px] font-bold uppercase mb-2 tracking-[0.2em] border-b border-gray-700 pb-1">Participation</h3>
+              <ul className="text-[11px] text-gray-300 space-y-2 list-none">
+                <li className="flex gap-2"><span>1.</span> Cliquez sur un point</li>
+                <li className="flex gap-2"><span>2.</span> Votez via votre email</li>
+                <li className="flex gap-2"><span>3.</span> Partagez pour gagner !</li>
               </ul>
            </div>
         </div>

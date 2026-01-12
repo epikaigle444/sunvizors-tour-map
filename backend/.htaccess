@@ -1,0 +1,8 @@
+# Empêcher le listage des fichiers API
+Options -Indexes
+
+# Bloquer l'accès direct aux fichiers de diagnostic
+<Files "diag.php">
+    Order allow,deny
+    Deny from all
+</Files>

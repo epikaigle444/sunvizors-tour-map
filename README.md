@@ -3,7 +3,7 @@
 **Site Officiel :** [https://map.thesunvizors.com](https://map.thesunvizors.com)
 
 ## 📖 Le Concept
-Cette application est une carte interactive dédiée aux fans du groupe **The Sunvizors**. Pour préparer leur tournée 2026, le groupe a décidé de donner la parole à son public. Les fans peuvent explorer la carte, cliquer sur leur ville (ou la plus proche) et voter pour demander un concert.
+Ce site web est une carte interactive dédiée aux fans du groupe **The Sunvizors**. Pour préparer leur tournée 2026, le groupe a décidé de donner la parole à son public. Les fans peuvent explorer la carte, cliquer sur leur ville (ou la plus proche) et voter pour demander un concert.
 
 L'objectif est de permettre au groupe et à sa production d'identifier les zones géographiques où la demande est la plus forte, afin de construire une tournée au plus près de sa communauté. Chaque vote peut être accompagné d'une proposition de salle de concert et d'un message personnel pour le groupe.
 

@@ -67,14 +67,14 @@ const WelcomeScreen = ({ onStart }) => {
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tighter uppercase">
               ★ LA TOURNÉE <span className="text-gold">PARTICIPATIVE</span> ★
             </h1>
-            <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-              Nous voulons venir jouer près de chez vous.<br/>
-              Votez pour votre ville et construisons cette tournée ensemble.
+            <p className="text-gray-400 text-lg mb-8 leading-relaxed font-light">
+              Où souhaitez-vous nous voir en 2026 ?<br/>
+              <span className="text-white font-medium">Votez pour votre ville</span> et dessinons ensemble la route de nos prochains concerts.
             </p>
 
             <button 
               onClick={handleStart}
-              className="group relative px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold uppercase tracking-[0.2em] transition-all hover:bg-gold hover:text-black"
+              className="group relative px-10 py-5 bg-transparent border-2 border-gold text-gold font-bold uppercase tracking-[0.2em] transition-all hover:bg-gold hover:text-black shadow-[0_0_20px_rgba(247,220,111,0.1)] active:scale-95"
             >
               <span className="absolute inset-0 w-full h-full bg-gold/20 blur-xl opacity-0 group-hover:opacity-50 transition-opacity"></span>
               {inviteCity ? "JE VOTE POUR " + inviteCity.toUpperCase() : "ACCÉDER À LA CARTE"}
