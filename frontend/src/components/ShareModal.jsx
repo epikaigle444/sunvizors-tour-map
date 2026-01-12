@@ -103,11 +103,11 @@ const ShareModal = ({ onClose, city, leaderboard }) => {
 };
 
 const ShareBtn = ({ type, onClick }) => {
-  const icons = {
-    facebook: <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />,
-    twitter: <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />,
-    whatsapp: <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.185-.573c.948.517 2.023.814 3.146.815 3.182 0 5.768-2.587 5.769-5.767 0-3.18-2.587-5.766-5.769-5.766zm3.426 8.313c-.124.355-.613.662-.848.75-.236.088-.546.125-1.332-.188-1.02-.405-1.829-1.355-2.14-1.781-.3-.427-1.475-1.987-1.475-3.507 0-1.52.806-2.247 1.107-2.547.3-.3.545-.355.729-.355.184 0 .366.003.522.012.188.012.39-.011.59.417.2.429.696 1.762.762 1.887.067.125.111.269.022.446-.089.177-.149.289-.298.462-.149.174-.314.388-.448.522-.133.133-.273.279-.122.531.151.252.662 1.144 1.392 1.791.944.833 1.742 1.091 1.995 1.217.253.126.402.105.553-.068.15-.173.645-.752.819-1.008.174-.256.346-.215.58-.127.234.088 1.488.701 1.747.83.259.129.431.194.493.31.062.115.062.669-.062 1.024z" />,
-    copy: <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+  // URLs des icônes officielles via SimpleIcons
+  const iconUrls = {
+    facebook: "https://cdn.simpleicons.org/facebook/white",
+    twitter: "https://cdn.simpleicons.org/x/white",
+    whatsapp: "https://cdn.simpleicons.org/whatsapp/white"
   };
 
   const colors = {
@@ -122,17 +122,19 @@ const ShareBtn = ({ type, onClick }) => {
       onClick={onClick}
       className={`${colors[type]} hover:opacity-90 text-white flex-1 py-3 rounded-lg flex items-center justify-center transition-all shadow-lg active:scale-95`}
     >
-      <svg 
-        className="w-6 h-6 fill-current" 
-        viewBox="0 0 24 24" 
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {type === 'copy' ? (
-          <g fill="none" stroke="currentColor" strokeWidth="2">
-            {icons[type]}
-          </g>
-        ) : icons[type]}
-      </svg>
+      {type === 'copy' ? (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+        </svg>
+      ) : (
+        <img 
+          src={iconUrls[type]} 
+          className="w-5 h-5 object-contain" 
+          alt={type}
+          // Sécurité anti-coupure : petite marge interne via padding
+          style={{ padding: '1px' }}
+        />
+      )}
     </button>
   );
 };
