@@ -80,15 +80,15 @@ function App() {
         {/* INFO BOXES (Below - Hidden on Mobile) */}
         <div className="hidden md:flex flex-col gap-4 pointer-events-auto">
            <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg">
-              <h3 className="text-gold text-[10px] font-bold uppercase mb-2 tracking-[0.2em] border-b border-gray-700 pb-1">Le concept</h3>
-              <p className="text-[11px] text-gray-300 leading-relaxed font-light">
+              <h3 className="text-gold text-xs font-bold uppercase mb-2 tracking-[0.2em] border-b border-gray-700 pb-1">Le concept</h3>
+              <p className="text-xs md:text-sm text-gray-300 leading-relaxed font-light">
                 <strong className="text-white font-medium">The Sunvizors</strong> préparent leur tournée 2026. Votez pour faire venir le groupe dans votre ville ! Chaque voix compte pour dessiner notre route.
               </p>
            </div>
            
            <div className="bg-black/80 backdrop-blur border border-gray-800 p-4 rounded text-white shadow-lg">
-              <h3 className="text-gold text-[10px] font-bold uppercase mb-2 tracking-[0.2em] border-b border-gray-700 pb-1">Participation</h3>
-              <ul className="text-[11px] text-gray-300 space-y-2 list-none">
+              <h3 className="text-gold text-xs font-bold uppercase mb-2 tracking-[0.2em] border-b border-gray-700 pb-1">Participation</h3>
+              <ul className="text-xs md:text-sm text-gray-300 space-y-2 list-none">
                 <li className="flex gap-2"><span>1.</span> Cliquez sur un point</li>
                 <li className="flex gap-2"><span>2.</span> Votez via votre email</li>
                 <li className="flex gap-2"><span>3.</span> Partagez pour gagner !</li>
